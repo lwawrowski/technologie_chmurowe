@@ -1,0 +1,22 @@
+project:
+  type: book
+
+book:
+  title: "Technologie chmurowe"
+  author: "UŚ"
+  date: ""
+  chapters:
+    - 01-linux.qmd
+    - 02.qmd
+    - 03-docker.qmd
+    - 04-terraform.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    toc-title: "Spis treści"
+    theme:
+      - cosmo
+      - brand
