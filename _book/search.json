@@ -4,29 +4,39 @@
     "href": "index.html",
     "title": "Technologie chmurowe",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "text": "Wprowadzenie\nPlan zajęć:\n1: Organizacyjne (ocena z projektu) 2: Wprowdzenie do linuxa + VirtualBox (nano, scp, ssh, sudo) [ŁW] 4: Azure (azure cli) + schemat rozliczeń [MT] + przegląd usług [BS] 6: CI/CD - index.html + azure [BS] / deklaracja chmury do projektu 8: Docker [ŁW] 10: Terraform [MT] 12: Ansible [MT] 13: Konsultacje/realizacja projektu 14-15: Prezentacja projektów",
     "crumbs": [
-      "Preface"
+      "Wprowadzenie"
     ]
   },
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "1  Introduction",
+    "objectID": "02.html",
+    "href": "02.html",
+    "title": "2  Introduction",
     "section": "",
     "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
-    "objectID": "summary.html",
-    "href": "summary.html",
-    "title": "2  Summary",
+    "objectID": "03-docker.html",
+    "href": "03-docker.html",
+    "title": "3  Docker",
     "section": "",
     "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Docker</span>"
+    ]
+  },
+  {
+    "objectID": "04-terraform.html",
+    "href": "04-terraform.html",
+    "title": "4  Terraform",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Terraform</span>"
     ]
   },
   {

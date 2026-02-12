@@ -6,13 +6,14 @@ book:
   author: "UŚ"
   date: ""
   chapters:
+    - index.qmd
+    - 00-organizacja.qmd
     - 01-linux.qmd
-    - 02.qmd
-    - 03-docker.qmd
-    - 04-terraform.qmd
-    - references.qmd
-
-bibliography: references.bib
+    - 02-azure.qmd
+    - 03-ci_cd.qmd
+    - 04-docker.qmd
+    - 05-ansible.qmd
+    - 06-terraform.qmd
 
 format:
   html:
