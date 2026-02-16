@@ -1,0 +1,56 @@
+## VirtualBox
+
+Wirtualizacja to technologia, która pozwala na uruchomienie wielu systemów operacyjnych (tzw. Guest OS) na jednej fizycznej maszynie (Host OS) przy wykorzystaniu warstwy pośredniczącej zwanej Hypervisorem.
+
+Na zajęciach z technologii chmurowych skupimy się na dwóch najpopularniejszych podejściach w środowisku Windows: VirtualBox oraz WSL.
+
+### Oracle VM VirtualBox
+
+VirtualBox to klasyczne podejście do wirtualizacji. Tworzy on kompletną, odizolowaną "maszynę w maszynie" z własnym wirtualnym BIOS-em, dyskiem i kartą sieciową.
+
+Jak to działa? VirtualBox działa jako aplikacja w systemie Windows. Rezerwuje określoną ilość RAM-u i mocy procesora wyłącznie dla Linuxa.
+
+- Izolacja: Jeśli "zepsujesz" coś w Linuxie, Twój Windows pozostaje całkowicie bezpieczny.
+
+- Migawki (Snapshots): Możesz zapisać stan maszyny przed ryzykowną operacją i wrócić do niego w sekundę.
+
+- Pełny interfejs: Możesz zainstalować wersję Linuxa z pulpitem (GUI).
+
+- Jest dość "ciężki" dla podzespołów laptopa.
+
+### Windows Subsystem for Linux (WSL 2)
+
+WSL to "magia" od Microsoftu, która pozwala uruchamiać środowisko Linux bezpośrednio w Windowsie, bez narzutu pełnej maszyny wirtualnej.
+
+WSL 2 korzysta z lekkiej maszyny wirtualnej opartej na technologii Hyper-V, ale robi to w sposób niemal niezauważalny. Linux i Windows współdzielą zasoby dynamicznie.
+
+- Szybkość: Linux uruchamia się w kilka sekund.
+
+- Integracja: Możesz przeglądać pliki Linuxa w Eksploratorze Windows i odwrotnie.
+
+- Niskie zużycie zasobów: Pobiera tyle RAM-u, ile faktycznie potrzebuje w danej chwili.
+
+- Trudniej o pełną izolację; niektóre zaawansowane funkcje sieciowe mogą być trudniejsze do skonfigurowania niż w VirtualBox.
+
+### Instalacja 
+
+[Pobranie VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
+[Pobranie obrazu Linuxa](https://ubuntu.com/download/server) - Ubuntu Server 24.04.4 LTS
+
+![Okno programu](img/vb1.png)
+
+W celu umożliwienia łączenia się z zainstalowanym systemem, tak jakby to była maszyna zdalna to należy ustawić przekierowanie portów w ustawieniach sieci.
+
+![Ustawienia](img/vb2.png)
+
+![Przekierowanie portów](img/vb3.png)
+
+Wówczas możemy zalogować się do uruchomionej maszyny np. przez MS PowerShell lub PuTTy tak jakby to był serwer zdalny.
+
+```bash
+ssh -p 2222 lukasz@localhost
+```
+
+
+

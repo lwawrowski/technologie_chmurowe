@@ -1,0 +1,35 @@
+# Organizacja zajęć
+
+Zajęcia odbywają się w trybie hybrydowym. 
+
+Planowany program zajęć jest następujący:
+
+| Tydzień zajęć | Temat                  | Uwagi                                    |
+|---------------|------------------------|------------------------------------------|
+| 1             | Zajęcia organizacyjne  |                                          |
+| 2-3           | Wprowadzenie do linuxa |                                          |
+| 4-5           | Azure                  |                                          |
+| 6-7           | CI/CD                  | Deklaracja wyboru technologii chmurowej  |
+| 8-9           | Docker                 |                                          |
+| 10-11         | Ansible                |                                          |
+| 12-13         | Terraform              |                                          |
+| 14-15         | Prezentacja projektów  |                                          |
+
+## Materiały
+
+Niniejszy skrypt zawiera najważniejsze zagadnienia realizowane podczas zajęć. W celu uzupełnienia wiedzy można sięgnąć do następujących zasobów:
+
+- [Introduction to Cloud Infrastructure Technologies](https://trainingportal.linuxfoundation.org/courses/introduction-to-cloud-infrastructure-technologies)
+
+- [Microsoft Learn](https://learn.microsoft.com/pl-pl/training/)
+
+## Zaliczenie
+
+Na zaliczenie należy przygotować projekt grupowy polegający na przygotowaniu wdrożenia wybranej aplikacji w wybranej technologii chmurowej. Ocenie podlega sprawozdanie z przeprowadzonego wdrożenia. W połowie semestru studenci dokonują deklaracji wybranej technologii chmurowej.
+
+Wymagania projektowe:
+
+TBA
+
+Sprawozdanie z projektu ma zostać załadowane na platformę moodle. Podczas dwóch ostatnich tygodni zajęć odbędzie się prezentacja wykonanych projektów.
+

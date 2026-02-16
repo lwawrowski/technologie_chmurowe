@@ -1,2 +1,7 @@
 # Wprowadzenie do linuxa
 
+Autor: Łukasz Wawrowski
+
+{{< include 01a-virtualbox.qmd >}}
+
+{{< include 01b-linux.qmd >}}

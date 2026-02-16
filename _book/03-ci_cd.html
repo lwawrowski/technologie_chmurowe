@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Wprowadzenie do linuxa – Technologie chmurowe</title>
+<title>4&nbsp; CI/CD – Technologie chmurowe</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02a-azure.html" rel="next">
-<link href="./00-organizacja.html" rel="prev">
+<link href="./04-docker.html" rel="next">
+<link href="./02a-azure.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-linux.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wprowadzenie do linuxa</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-ci_cd.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CI/CD</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -154,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-linux.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01-linux.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wprowadzenie do linuxa</span></span></a>
   </div>
 </li>
@@ -166,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-ci_cd.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-ci_cd.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CI/CD</span></span></a>
   </div>
 </li>
@@ -193,27 +159,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Spis treści</h2>
-   
-  <ul>
-  <li><a href="#virtualbox" id="toc-virtualbox" class="nav-link active" data-scroll-target="#virtualbox"><span class="header-section-number">2.1</span> VirtualBox</a>
-  <ul class="collapse">
-  <li><a href="#oracle-vm-virtualbox" id="toc-oracle-vm-virtualbox" class="nav-link" data-scroll-target="#oracle-vm-virtualbox"><span class="header-section-number">2.1.1</span> Oracle VM VirtualBox</a></li>
-  <li><a href="#windows-subsystem-for-linux-wsl-2" id="toc-windows-subsystem-for-linux-wsl-2" class="nav-link" data-scroll-target="#windows-subsystem-for-linux-wsl-2"><span class="header-section-number">2.1.2</span> Windows Subsystem for Linux (WSL 2)</a></li>
-  <li><a href="#instalacja" id="toc-instalacja" class="nav-link" data-scroll-target="#instalacja"><span class="header-section-number">2.1.3</span> Instalacja</a></li>
-  </ul></li>
-  <li><a href="#podstawowe-komendy-linux" id="toc-podstawowe-komendy-linux" class="nav-link" data-scroll-target="#podstawowe-komendy-linux"><span class="header-section-number">2.2</span> Podstawowe komendy Linux</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wprowadzenie do linuxa</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CI/CD</span></h1>
 </div>
 
 
@@ -230,65 +184,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Autor: Łukasz Wawrowski</p>
-<section id="virtualbox" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="virtualbox"><span class="header-section-number">2.1</span> VirtualBox</h2>
-<p>Wirtualizacja to technologia, która pozwala na uruchomienie wielu systemów operacyjnych (tzw. Guest OS) na jednej fizycznej maszynie (Host OS) przy wykorzystaniu warstwy pośredniczącej zwanej Hypervisorem.</p>
-<p>Na zajęciach z technologii chmurowych skupimy się na dwóch najpopularniejszych podejściach w środowisku Windows: VirtualBox oraz WSL.</p>
-<section id="oracle-vm-virtualbox" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="oracle-vm-virtualbox"><span class="header-section-number">2.1.1</span> Oracle VM VirtualBox</h3>
-<p>VirtualBox to klasyczne podejście do wirtualizacji. Tworzy on kompletną, odizolowaną “maszynę w maszynie” z własnym wirtualnym BIOS-em, dyskiem i kartą sieciową.</p>
-<p>Jak to działa? VirtualBox działa jako aplikacja w systemie Windows. Rezerwuje określoną ilość RAM-u i mocy procesora wyłącznie dla Linuxa.</p>
-<ul>
-<li><p>Izolacja: Jeśli “zepsujesz” coś w Linuxie, Twój Windows pozostaje całkowicie bezpieczny.</p></li>
-<li><p>Migawki (Snapshots): Możesz zapisać stan maszyny przed ryzykowną operacją i wrócić do niego w sekundę.</p></li>
-<li><p>Pełny interfejs: Możesz zainstalować wersję Linuxa z pulpitem (GUI).</p></li>
-<li><p>Jest dość “ciężki” dla podzespołów laptopa.</p></li>
-</ul>
-</section>
-<section id="windows-subsystem-for-linux-wsl-2" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="windows-subsystem-for-linux-wsl-2"><span class="header-section-number">2.1.2</span> Windows Subsystem for Linux (WSL 2)</h3>
-<p>WSL to “magia” od Microsoftu, która pozwala uruchamiać środowisko Linux bezpośrednio w Windowsie, bez narzutu pełnej maszyny wirtualnej.</p>
-<p>WSL 2 korzysta z lekkiej maszyny wirtualnej opartej na technologii Hyper-V, ale robi to w sposób niemal niezauważalny. Linux i Windows współdzielą zasoby dynamicznie.</p>
-<ul>
-<li><p>Szybkość: Linux uruchamia się w kilka sekund.</p></li>
-<li><p>Integracja: Możesz przeglądać pliki Linuxa w Eksploratorze Windows i odwrotnie.</p></li>
-<li><p>Niskie zużycie zasobów: Pobiera tyle RAM-u, ile faktycznie potrzebuje w danej chwili.</p></li>
-<li><p>Trudniej o pełną izolację; niektóre zaawansowane funkcje sieciowe mogą być trudniejsze do skonfigurowania niż w VirtualBox.</p></li>
-</ul>
-</section>
-<section id="instalacja" class="level3" data-number="2.1.3">
-<h3 data-number="2.1.3" class="anchored" data-anchor-id="instalacja"><span class="header-section-number">2.1.3</span> Instalacja</h3>
-<p><a href="https://www.virtualbox.org/wiki/Downloads">Pobranie VirtualBox</a></p>
-<p><a href="https://ubuntu.com/download/server">Pobranie obrazu Linuxa</a> - Ubuntu Server 24.04.4 LTS</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vb1.png" class="img-fluid figure-img"></p>
-<figcaption>Okno programu</figcaption>
-</figure>
-</div>
-<p>W celu umożliwienia łączenia się z zainstalowanym systemem, tak jakby to była maszyna zdalna to należy ustawić przekierowanie portów w ustawieniach sieci.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vb2.png" class="img-fluid figure-img"></p>
-<figcaption>Ustawienia</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vb3.png" class="img-fluid figure-img"></p>
-<figcaption>Przekierowanie portów</figcaption>
-</figure>
-</div>
-<p>Wówczas możemy zalogować się do uruchomionej maszyny np. przez MS PowerShell lub PuTTy.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-p</span> 2222 lukasz@localhost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="podstawowe-komendy-linux" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="podstawowe-komendy-linux"><span class="header-section-number">2.2</span> Podstawowe komendy Linux</h2>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -710,13 +607,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./00-organizacja.html" class="pagination-link" aria-label="Organizacja zajęć">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Organizacja zajęć</span></span>
+      <a href="./02a-azure.html" class="pagination-link" aria-label="Microsoft Azure">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microsoft Azure</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02a-azure.html" class="pagination-link" aria-label="Microsoft Azure">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microsoft Azure</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./04-docker.html" class="pagination-link" aria-label="Docker">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Docker</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,2 +1,5 @@
 # Microsoft Azure
 
+{{< include 02b-azure-rozliczenia.qmd >}}
+
+{{< include 02c-azure-uslugi.qmd >}}

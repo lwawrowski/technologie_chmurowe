@@ -3,13 +3,13 @@ project:
 
 book:
   title: "Technologie chmurowe"
-  author: "UŚ"
+  author: "Magdalena Tkacz, Bartosz Szóstak, Łukasz Wawrowski"
   date: ""
   chapters:
     - index.qmd
     - 00-organizacja.qmd
     - 01-linux.qmd
-    - 02-azure.qmd
+    - 02a-azure.qmd
     - 03-ci_cd.qmd
     - 04-docker.qmd
     - 05-ansible.qmd
