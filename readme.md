@@ -1,4 +1,14 @@
-Plan zajęć:
+# Render 
+
+Instalacja quarto https://quarto.org/docs/get-started/
+
+Uruchomienie render w konsoli 
+
+```bash
+quarto render
+```
+
+# Plan zajęć
 
 1: Organizacyjne (ocena z projektu)
 
@@ -17,3 +27,4 @@ Plan zajęć:
 13-14: Prezentacja projektów (grupy śr: 27.05, 3.06, grupy czw: 28.05, 11.06)
 
 15: Zaliczenie
+
