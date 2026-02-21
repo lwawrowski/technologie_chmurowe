@@ -662,7 +662,7 @@ az acr login --name myregistry
 # Budowanie z tagiem ACR
 docker build -t <nazwa ACR>.azurecr.io/azure-app-backend:latest ./backend
 docker build -t <nazwa ACR>.azurecr.io/azure-app-frontend:latest ./frontend
-docker build -t <nazwa ACR>.azurecr.io/azure-app-nginx:latest ./nginx
+docker build -f ./nginx/Dockerfile.azure -t <nazwa ACR>.azurecr.io/azure-app-nginx:latest ./nginx
 
 # Pushowanie do ACR
 docker push <nazwa ACR>.azurecr.io/azure-app-backend:latest
@@ -700,7 +700,8 @@ Tak wygląda "Deployment Center" w deployowanym web app:
 
 Jest tam jeden kontener z nginx. Trzeba dodać kolejne wybierając **"+ Add"**:
 ![alt text](image-1.png)
-Wybiera się tak samo jak wcześniej nginx. Front na porcie 5000 a back na 
+Wybiera się tak samo jak wcześniej nginx. Front na porcie 8080 a back na 5000.
+
 --
 
 ## 6. Tworzenie bazy danych i Blob Storage
