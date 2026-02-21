@@ -657,7 +657,7 @@ bartosz@Bartoszs-MacBook-Pro azure_app % az acr create \
 # Zaloguj Docker do ACR
 az acr login --name myregistry
 
-# w folderze z aplikacją utwórz obrazy
+# w folderze z aplikacją utwórz obrazy (nie zapomnij uruchomic Docker Desktop)
 
 # Budowanie z tagiem ACR
 docker build -t <nazwa ACR>.azurecr.io/azure-app-backend:latest ./backend
