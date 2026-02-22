@@ -1,6 +1,10 @@
+# Azure Container Registry version
+# INSTRUKCJA: Zamień <TWOJA-NAZWA-ACR> na nazwę swojego Azure Container Registry
+# Przykład: mojeacr123.azurecr.io/azure-app-2-backend:latest
+
 services:
   backend:
-    image: myregistrybart666.azurecr.io/azure-app-backend:latest
+    image: mynewfunnyrepo.azurecr.io/azure-app-2-backend:latest
     container_name: azure_app_backend
     env_file:
       - .env
@@ -8,16 +12,16 @@ services:
       - app-network
 
   frontend:
-    image: myregistrybart666.azurecr.io/azure-app-frontend:latest
+    image: mynewfunnyrepo.azurecr.io/azure-app-2-frontend:latest
     container_name: azure_app_frontend
     networks:
       - app-network
 
   nginx:
-    image: myregistrybart666.azurecr.io/azure-app-nginx:latest
+    image: mynewfunnyrepo.azurecr.io/azure-app-2-nginx:latest
     container_name: azure_app_nginx
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - backend
       - frontend

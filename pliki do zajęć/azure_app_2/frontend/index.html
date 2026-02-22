@@ -27,9 +27,26 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin: 5px;
         }
         button:hover {
             background-color: #005a9e;
+        }
+        input[type="text"], input[type="file"] {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
         #response {
             margin-top: 20px;
@@ -45,43 +62,68 @@
         <h1>🚀 Azure Demo App</h1>
         <p>Aplikacja pokazująca PostgreSQL i Blob Storage na Azure</p>
         
-        <h3>📊 Baza danych PostgreSQL</h3>
-        <button onclick="addMessage()">Dodaj wiadomość do DB</button>
-        <button onclick="getMessages()">Pobierz wiadomości z DB</button>
+        <h3>� Baza danych PostgreSQL - Użytkownicy</h3>
+        <div class="form-group">
+            <label for="userName">Imię:</label>
+            <input type="text" id="userName" placeholder="Jan">
+            <label for="userSurname">Nazwisko:</label>
+            <input type="text" id="userSurname" placeholder="Kowalski">
+            <button onclick="addUser()">Dodaj użytkownika</button>
+        </div>
+        <button onclick="getUsers()">Pokaż użytkowników</button>
         
-        <h3>📦 Blob Storage</h3>
-        <button onclick="uploadBlob()">Upload plik do Blob</button>
-        <button onclick="listBlobs()">Lista plików w Blob</button>
+        <h3>📦 Blob Storage - Upload PDF</h3>
+        <div class="form-group">
+            <label for="pdfFile">Wybierz plik PDF:</label>
+            <input type="file" id="pdfFile" accept=".pdf">
+            <button onclick="uploadPDF()">Upload PDF do Blob Storage</button>
+        </div>
+        <button onclick="listBlobs()">Lista plików w Blob Storage</button>
         
         <div id="response"></div>
     </div>
 
     <script>
-        async function addMessage() {
+        async function addUser() {
+            const name = document.getElementById('userName').value.trim();
+            const surname = document.getElementById('userSurname').value.trim();
+            
+            if (!name || !surname) {
+                showResponse('❌ Proszę wypełnić imię i nazwisko', true);
+                return;
+            }
+            
             try {
-                const response = await fetch('/api/db/messages', {
+                const response = await fetch('/api/db/users', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({content: 'Test message ' + new Date().toLocaleString()})
+                    body: JSON.stringify({name: name, surname: surname})
                 });
                 const data = await response.json();
-                showResponse(`✅ Dodano do DB: ID=${data.id}, "${data.content}"`);
+                
+                if (data.status === 'success') {
+                    showResponse(`✅ Dodano użytkownika: ${data.name} ${data.surname} (ID: ${data.id})`);
+                    document.getElementById('userName').value = '';
+                    document.getElementById('userSurname').value = '';
+                } else {
+                    showResponse(`❌ Błąd: ${data.error}`, true);
+                }
             } catch (error) {
                 showResponse(`❌ Błąd: ${error.message}`, true);
             }
         }
 
-        async function getMessages() {
+        async function getUsers() {
             try {
-                const response = await fetch('/api/db/messages');
+                const response = await fetch('/api/db/users');
                 const data = await response.json();
-                let html = '<h3>📊 Wiadomości z PostgreSQL:</h3>';
-                if (data.messages.length === 0) {
-                    html += '<p>Brak wiadomości. Dodaj pierwszą!</p>';
+                let html = '<h3>👥 Lista użytkowników z PostgreSQL:</h3>';
+                if (data.users.length === 0) {
+                    html += '<p>Brak użytkowników. Dodaj pierwszego!</p>';
                 } else {
                     html += '<ul style="text-align: left;">';
-                    data.messages.forEach(msg => {
-                        html += `<li><strong>ID ${msg.id}:</strong> ${msg.content} <em>(${msg.created_at})</em></li>`;
+                    data.users.forEach(user => {
+                        html += `<li><strong>${user.name} ${user.surname}</strong> (ID: ${user.id}, Data: ${user.creation_date})</li>`;
                     });
                     html += '</ul>';
                 }
@@ -91,15 +133,36 @@
             }
         }
 
-        async function uploadBlob() {
+        async function uploadPDF() {
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showResponse('❌ Proszę wybrać plik PDF', true);
+                return;
+            }
+            
+            if (!file.name.toLowerCase().endsWith('.pdf')) {
+                showResponse('❌ Tylko pliki PDF są dozwolone', true);
+                return;
+            }
+            
             try {
+                const formData = new FormData();
+                formData.append('file', file);
+                
                 const response = await fetch('/api/blob/upload', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({content: 'Demo content from Azure App at ' + new Date().toISOString()})
+                    body: formData
                 });
                 const data = await response.json();
-                showResponse(`✅ Uploaded: ${data.filename}<br>URL: ${data.url}`);
+                
+                if (data.status === 'success') {
+                    showResponse(`✅ PDF uploaded: ${data.filename}<br>URL: ${data.url}`);
+                    fileInput.value = '';
+                } else {
+                    showResponse(`❌ Błąd: ${data.error}`, true);
+                }
             } catch (error) {
                 showResponse(`❌ Błąd: ${error.message}`, true);
             }
@@ -111,7 +174,7 @@
                 const data = await response.json();
                 let html = '<h3>📦 Pliki w Blob Storage:</h3>';
                 if (data.blobs.length === 0) {
-                    html += '<p>Brak plików. Upload pierwszy!</p>';
+                    html += '<p>Brak plików. Upload pierwszy plik PDF!</p>';
                 } else {
                     html += '<ul style="text-align: left;">';
                     data.blobs.forEach(blob => {

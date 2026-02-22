@@ -3,7 +3,7 @@ from flask_cors import CORS
 import psycopg2
 import os
 from dotenv import load_dotenv
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobServiceClient, ContentSettings
 import io
 from datetime import datetime
 
@@ -20,10 +20,11 @@ def init_db():
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute('''
-            CREATE TABLE IF NOT EXISTS messages (
+            CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
-                content TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                name VARCHAR(100) NOT NULL,
+                surname VARCHAR(100) NOT NULL,
+                creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         conn.commit()
@@ -45,47 +46,65 @@ def hello():
 def health():
     return jsonify({'status': 'healthy'})
 
-@app.route('/api/db/messages', methods=['GET'])
-def get_messages():
+@app.route('/api/db/users', methods=['GET'])
+def get_users():
     try:
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute('SELECT id, content, created_at FROM messages ORDER BY created_at DESC LIMIT 10')
-        messages = [{'id': row[0], 'content': row[1], 'created_at': str(row[2])} for row in cur.fetchall()]
+        cur.execute('SELECT id, name, surname, creation_date FROM users ORDER BY creation_date DESC')
+        users = [{'id': row[0], 'name': row[1], 'surname': row[2], 'creation_date': str(row[3])} for row in cur.fetchall()]
         cur.close()
         conn.close()
-        return jsonify({'messages': messages, 'status': 'success'})
+        return jsonify({'users': users, 'status': 'success'})
     except Exception as e:
         return jsonify({'error': str(e), 'status': 'error'}), 500
 
-@app.route('/api/db/messages', methods=['POST'])
-def add_message():
+@app.route('/api/db/users', methods=['POST'])
+def add_user():
     try:
         data = request.get_json()
-        content = data.get('content', 'Test message')
+        name = data.get('name', '')
+        surname = data.get('surname', '')
+        
+        if not name or not surname:
+            return jsonify({'error': 'Name and surname are required', 'status': 'error'}), 400
+            
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute('INSERT INTO messages (content) VALUES (%s) RETURNING id', (content,))
-        message_id = cur.fetchone()[0]
+        cur.execute('INSERT INTO users (name, surname) VALUES (%s, %s) RETURNING id, creation_date', (name, surname))
+        result = cur.fetchone()
+        user_id = result[0]
+        creation_date = result[1]
         conn.commit()
         cur.close()
         conn.close()
-        return jsonify({'id': message_id, 'content': content, 'status': 'success'})
+        return jsonify({'id': user_id, 'name': name, 'surname': surname, 'creation_date': str(creation_date), 'status': 'success'})
     except Exception as e:
         return jsonify({'error': str(e), 'status': 'error'}), 500
 
 @app.route('/api/blob/upload', methods=['POST'])
 def upload_blob():
     try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file provided', 'status': 'error'}), 400
+            
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No file selected', 'status': 'error'}), 400
+            
+        if not file.filename.lower().endswith('.pdf'):
+            return jsonify({'error': 'Only PDF files are allowed', 'status': 'error'}), 400
+        
         blob_service_client = BlobServiceClient.from_connection_string(os.getenv('AZURE_STORAGE_CONNECTION_STRING'))
         container_name = os.getenv('AZURE_STORAGE_CONTAINER', 'demo-container')
         
-        data = request.get_json()
-        content = data.get('content', 'Hello from Azure Blob Storage!')
-        filename = f"test_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+        # Generuj unikalną nazwę pliku
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f"pdf_{timestamp}_{file.filename}"
         
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=filename)
-        blob_client.upload_blob(content, overwrite=True)
+        content_settings = ContentSettings(content_type='application/pdf')
+        blob_client.upload_blob(file.read(), overwrite=True, content_settings=content_settings)
         
         return jsonify({'filename': filename, 'status': 'success', 'url': blob_client.url})
     except Exception as e:

@@ -13,16 +13,33 @@
 #### Krok 2: Pierwsze kroki w Azure Portal
 1. Otwórz: **https://portal.azure.com**
 2. Zaloguj się tym samym kontem
-3. **Zapoznaj się z interfejsem:**
-   - **Lewy panel (☰)** - główne menu z usługami
-   - **Wyszukiwarka (góra)** - szukaj usług po nazwie
-   - **Cloud Shell (`>_`)** - terminal w przeglądarce (po prawej od wyszukiwarki: wyszukiwarka | copilot | Cloud Shell)
-   - **Cost Management** - kontrola wydatków (wpisać w wyszukiwarce)
+
 
 #### Krok 3: Sprawdzenie subskrypcji
 1. W wyszukiwarce wpisz: **"Subscriptions"**
 2. Kliknij na swoją subskrypcję **"Azure for Students"**
 3. Zobacz swoje 100$ (lub €) kredytów
+
+# Instalacja Azure-CLI
+
+
+```bash
+# instalacja azure-cli na macOS
+brew update
+brew install azure-cli
+
+# lub na windows
+winget install --exact --id Microsoft.AzureCLI
+
+# Zweryfikuj instalacje
+az version
+
+# Zaloguj do Azure
+az login
+
+# Zaloguj się w otwartym oknie przeglądarki i wybierz subskrypcje w terminalu
+```
+
 
 # GitHub Developer Pack
 
@@ -30,7 +47,7 @@
 ❗ **Wymaganay telefon!**\
 ❗ **Weryfikacja moze zająć do dwóch tygodni!**
 
-#### Krok 1: Założenie konta Azure for Students
+
 1. Otwórz: https://education.github.com/pack
 2. Kliknij **"Sign Up for Student Developer Pack"** (lub coś podobnego)
 3. Zaloguj się do prywatnego konta GitHub (lub załóz jeśli nie masz)
@@ -54,22 +71,3 @@
 18. Zainstalować dodatek **GitHub Copilot Chat** (wyszukać w **Extensions** polewej)
 19. Warto nauczyć się Copilota tutaj: https://learn.microsoft.com/en-us/training/paths/copilot/?source=recommendations
 
-# Instalacja Azure-CLI
-
-
-```bash
-# instalacja azure-cli na macOS
-brew update
-brew install azure-cli
-
-# lub na windows
-winget install --exact --id Microsoft.AzureCLI
-
-# Zweryfikuj instalacje
-az version
-
-# Zaloguj do Azure
-az login
-
-# Zaloguj się w otwartym oknie przeglądarki i wybierz subskrypcje w terminalu
-```
