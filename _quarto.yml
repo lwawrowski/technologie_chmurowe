@@ -9,9 +9,10 @@ book:
     - index.qmd
     - 00-organizacja.qmd
     - 01-linux.qmd
+    - 04-docker.qmd
+    - 02a-azure-intro.qmd
     - 02a-azure.qmd
     - 03-ci_cd.qmd
-    - 04-docker.qmd
     - 05-ansible.qmd
     - 06-terraform.qmd
 

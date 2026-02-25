@@ -1,11 +1,12 @@
-# Azure - Plan zajęć warsztatowych
+# Microsoft Azure - część 1
+
+Autor: Bartosz Szóstak
 
 ## Cel zajęć
 - Wprowadzenie do platformy Microsoft Azure (Portal + CLI)
 - Praktyczna nauka tworzenia zasobów w chmurze
 - Zrozumienie modelu rozliczeń i wykorzystanie darmowych usług
 - Przegląd usług Azure przydatnych w projekcie końcowym
-
 
 ---
 
@@ -777,9 +778,9 @@ git clone https://github.com/lwawrowski/technologie_chmurowe.git
 ### 5.2 lokalne uruchomienie aplikacji
 
 ```bash
-# Otwórz terminal, przejdź do folderu pliki do zajęć/azure app/
+# Otwórz terminal, przejdź do folderu assets/azure app/
 
-cd pliki\ do\ zajęć/azure_app
+cd assets/azure_app
 
 # uruchom docker-compose
 
@@ -847,16 +848,16 @@ Teraz mozesz wejść w swój Resource Group, wyszukać swój Container Registry 
 ### 5.5 Kolejne kroki
 
 Tak wygląda "Deployment Center" w deployowanym web app:
-![alt text](image.png)
+![alt text](img/02_files/image.png)
 
 Jest tam jeden kontener z nginx. Trzeba dodać kolejne wybierając **"+ Add"**:
-![alt text](image-1.png)
-Wybiera się tak samo jak wcześniej nginx. Front na porcie 8080 a back na 5000. I zrestartować apkę w overview. Następnie wejść w "Default domain", jeśli wszyskto jest ok to po paru minutach pojawi się strona.
+![alt text](img/02_files/image-1.png)
+Wybiera się tak samo jak wcześniej nginx. Front na porcie 8080 a back na 5000. I zrestartować apkę w overview. Następnie wejść w "Default domain", jeśli wszystko jest ok to po paru minutach pojawi się strona.
 
 
 Mozna tez dodać env variables jeśli jest taka potrzeba, np. kiedy trzeba się łączyć z bazą i nie podaje się haseł w kodzie (i słusznie). Wygląda to w ten sposób:
 
-![alt text](image-2.png)
+![alt text](img/02_files/image-2.png)
 
 --
 
@@ -1080,7 +1081,7 @@ networks:
 
 ```bash
 # Na LOKALNYM komputerze w folderze azure_app_2
-cd "/Users/bartosz/projects/technologie_chmurowe/pliki do zajęć/azure_app_2"
+cd "/Users/bartosz/projects/technologie_chmurowe/assets/azure_app_2"
 
 # Zbuduj obrazy z tagiem ACR
 # WAŻNE: --platform linux/amd64 dla kompatybilności z VM (nawet na Apple Silicon)
@@ -1324,7 +1325,7 @@ Informacje o tym jak działa Key Vault i jak mozna go uzywać znajdują się tut
 
 ```
 ┌─────────────────────────────────────────────────┐
-│              INTERNET (HTTPS)                    │
+│              INTERNET (HTTPS)                   │
 └──────────────────┬──────────────────────────────┘
                    │
          ┌─────────▼─────────┐

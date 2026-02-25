@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -126,32 +160,38 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./04-docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Docker</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02a-azure-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02a-azure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microsoft Azure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 2</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CI/CD</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04-docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">CI/CD</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-ansible.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Ansible</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Ansible</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-terraform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Terraform</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Terraform</span></span></a>
   </div>
 </li>
     </ul>
@@ -166,6 +206,11 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#materiały" id="toc-materiały" class="nav-link active" data-scroll-target="#materiały"><span class="header-section-number">1.1</span> Materiały</a></li>
   <li><a href="#zaliczenie" id="toc-zaliczenie" class="nav-link" data-scroll-target="#zaliczenie"><span class="header-section-number">1.2</span> Zaliczenie</a></li>
+  <li><a href="#rejestracja-na-azure-portal" id="toc-rejestracja-na-azure-portal" class="nav-link" data-scroll-target="#rejestracja-na-azure-portal"><span class="header-section-number">1.3</span> Rejestracja na Azure Portal</a>
+  <ul class="collapse">
+  <li><a href="#instalacja-azure-cli" id="toc-instalacja-azure-cli" class="nav-link" data-scroll-target="#instalacja-azure-cli"><span class="header-section-number">1.3.1</span> Instalacja Azure-CLI</a></li>
+  <li><a href="#github-developer-pack" id="toc-github-developer-pack" class="nav-link" data-scroll-target="#github-developer-pack"><span class="header-section-number">1.3.2</span> GitHub Developer Pack</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -261,10 +306,66 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="1.2" class="anchored" data-anchor-id="zaliczenie"><span class="header-section-number">1.2</span> Zaliczenie</h2>
 <p>Na zaliczenie należy przygotować projekt grupowy polegający na przygotowaniu wdrożenia wybranej aplikacji w wybranej technologii chmurowej. Ocenie podlega sprawozdanie z przeprowadzonego wdrożenia. W połowie semestru studenci dokonują deklaracji wybranej technologii chmurowej.</p>
 <p>Wymagania projektowe:</p>
-<p>TBA</p>
+<p><img src="img/00_files/image.png" class="img-fluid"></p>
 <p>Sprawozdanie z projektu ma zostać załadowane na platformę moodle. Podczas dwóch ostatnich tygodni zajęć odbędzie się prezentacja wykonanych projektów.</p>
+</section>
+<section id="rejestracja-na-azure-portal" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="rejestracja-na-azure-portal"><span class="header-section-number">1.3</span> Rejestracja na Azure Portal</h2>
+<p>Krok 1: Założenie konta Azure for Students 1. Otwórz: https://azure.microsoft.com/en-us/free/students/ 2. Kliknij <strong>“Start Free”</strong> (lub coś podobnego) 3. Zaloguj się kontem uczelnianym</p>
+<p>❗ <strong>Nie potrzeba karty kredytowej!</strong></p>
+<p>Krok 2: Pierwsze kroki w Azure Portal 1. Otwórz: <strong>https://portal.azure.com</strong> 2. Zaloguj się tym samym kontem</p>
+<p>Krok 3: Sprawdzenie subskrypcji 1. W wyszukiwarce wpisz: <strong>“Subscriptions”</strong> 2. Kliknij na swoją subskrypcję <strong>“Azure for Students”</strong> 3. Zobacz swoje 100$ (lub €) kredytów</p>
+<section id="instalacja-azure-cli" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="instalacja-azure-cli"><span class="header-section-number">1.3.1</span> Instalacja Azure-CLI</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># instalacja azure-cli na macOS</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> update</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install azure-cli</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lub na windows</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">winget</span> install <span class="at">--exact</span> <span class="at">--id</span> Microsoft.AzureCLI</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Zweryfikuj instalacje</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> version</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Zaloguj do Azure</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> login</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Zaloguj się w otwartym oknie przeglądarki i wybierz subskrypcje w terminalu</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="github-developer-pack" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="github-developer-pack"><span class="header-section-number">1.3.2</span> GitHub Developer Pack</h3>
+<p>❗ <strong>Wymagana wazna legitymacja legitymacja!</strong><br>
+❗ <strong>Wymaganay telefon!</strong><br>
+❗ <strong>Weryfikacja moze zająć do dwóch tygodni!</strong></p>
+<ol type="1">
+<li>Otwórz: https://education.github.com/pack</li>
+<li>Kliknij <strong>“Sign Up for Student Developer Pack”</strong> (lub coś podobnego)</li>
+<li>Zaloguj się do prywatnego konta GitHub (lub załóż jeśli nie masz)</li>
+<li>Idź do *<strong>Emails</strong> pod sekcją <strong>Access</strong></li>
+<li>W <strong>Add email address</strong> dodaj email uczelniany</li>
+<li>Przejść do <strong>Payment information</strong> pod <strong>Billing and licensing</strong></li>
+<li>Wypełnić swój adres w <strong>Billing information</strong> (nie trzeba podawać karty ale wniosek będzie odrzucony jak nie będzie adresu)</li>
+<li>Przejść do <strong>Password and authentication</strong> pod <strong>Access</strong> i wybrać <strong>enable two-factor authentication</strong> (wniosek będzie odrzucony jak tego nie będzie)</li>
+<li>Uzyć telefonu i jakiejś aplikacji (np. Microsoft Authenticator - ja używam “Passwords” na iphonie)</li>
+<li>Wybierz <strong>Education benefits</strong> pod sekcją <strong>Access</strong> -&gt; <strong>Billing and licensing</strong></li>
+<li>Wybierz <strong>Start an application</strong></li>
+<li>Wypełnij formularz:
+<ol type="1">
+<li>Select your role</li>
+<li>Name of your school (University of Silesia in Katowice)</li>
+<li>School email address (***<span class="citation" data-cites="us.edu.pl">@us.edu.pl</span>)</li>
+</ol></li>
+<li>Kontynuuj zgodnie z instrukcjami (jest możliwość dodania tylko jednego zdjęcia legitymacji, zatem trzeba zrobić zdjęcie przodu i tyłu i skleić je razem)</li>
+<li>Po złożeniu wniosku trzeba czekać, może to zająć tydzień lub dwa ale trzeba obserwować czy nie zostanie odrzucony</li>
+<li>UWAGA! Zauważyłem błąd na GitHub. Jeśli aplikacja zostanie odrzucona (a bardzo możliwe, ze będzie) to nie można rozpocząć nowej. W takim wypadku warto spróbować zmienić zdjęcie swojej legitymacji - zrobić nowe np. w pionie zamiast w poziomie)</li>
+<li>Po zaakceptowaniu zainstalować Visual Studio Code</li>
+<li>Zalogować się do konta na GitHub przez VS Code (w lewym dolnym rogu)</li>
+<li>Zainstalować dodatek <strong>GitHub Copilot Chat</strong> (wyszukać w <strong>Extensions</strong> po lewej)</li>
+<li>Warto nauczyć się Copilota tutaj: https://learn.microsoft.com/en-us/training/paths/copilot/?source=recommendations</li>
+</ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

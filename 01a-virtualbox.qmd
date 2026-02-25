@@ -38,13 +38,13 @@ WSL 2 korzysta z lekkiej maszyny wirtualnej opartej na technologii Hyper-V, ale 
 
 [Pobranie obrazu Linuxa](https://ubuntu.com/download/server) - Ubuntu Server 24.04.4 LTS
 
-![Okno programu](img/vb1.png)
+![Okno programu](img/01_files/vb1.png)
 
 W celu umożliwienia łączenia się z zainstalowanym systemem, tak jakby to była maszyna zdalna to należy ustawić przekierowanie portów w ustawieniach sieci.
 
-![Ustawienia](img/vb2.png)
+![Ustawienia](img/01_files/vb2.png)
 
-![Przekierowanie portów](img/vb3.png)
+![Przekierowanie portów](img/01_files/vb3.png)
 
 Wówczas możemy zalogować się do uruchomionej maszyny np. przez MS PowerShell lub PuTTy tak jakby to był serwer zdalny.
 

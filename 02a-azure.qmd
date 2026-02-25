@@ -1,4 +1,4 @@
-# Microsoft Azure
+# Microsoft Azure - część 2
 
 {{< include 02b-azure-rozliczenia.qmd >}}
 
