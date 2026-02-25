@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Microsoft Azure – Technologie chmurowe</title>
+<title>5&nbsp; Microsoft Azure - część 2 – Technologie chmurowe</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./03-ci_cd.html" rel="next">
-<link href="./01-linux.html" rel="prev">
+<link href="./02a-azure-intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02a-azure.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microsoft Azure</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02a-azure.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 2</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,32 +126,38 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./04-docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Docker</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02a-azure-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02a-azure.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microsoft Azure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 2</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-ci_cd.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CI/CD</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04-docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Docker</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">CI/CD</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-ansible.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Ansible</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Ansible</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-terraform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Terraform</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Terraform</span></span></a>
   </div>
 </li>
     </ul>
@@ -164,8 +170,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Spis treści</h2>
    
   <ul>
-  <li><a href="#microsoft-azure" id="toc-microsoft-azure" class="nav-link active" data-scroll-target="#microsoft-azure"><span class="header-section-number">4</span> Microsoft Azure</a></li>
-  <li><a href="#microsoft-azure-1" id="toc-microsoft-azure-1" class="nav-link" data-scroll-target="#microsoft-azure-1"><span class="header-section-number">5</span> Microsoft Azure</a></li>
+  <li><a href="#microsoft-azure---rozliczenia" id="toc-microsoft-azure---rozliczenia" class="nav-link active" data-scroll-target="#microsoft-azure---rozliczenia"><span class="header-section-number">5.1</span> Microsoft Azure - rozliczenia</a></li>
+  <li><a href="#microsoft-azure---usługi" id="toc-microsoft-azure---usługi" class="nav-link" data-scroll-target="#microsoft-azure---usługi"><span class="header-section-number">5.2</span> Microsoft Azure - usługi</a></li>
   </ul>
 </nav>
     </div>
@@ -174,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microsoft Azure</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 2</span></h1>
 </div>
 
 
@@ -191,11 +197,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="microsoft-azure" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Microsoft Azure</h1>
+<section id="microsoft-azure---rozliczenia" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="microsoft-azure---rozliczenia"><span class="header-section-number">5.1</span> Microsoft Azure - rozliczenia</h2>
 </section>
-<section id="microsoft-azure-1" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Microsoft Azure</h1>
+<section id="microsoft-azure---usługi" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="microsoft-azure---usługi"><span class="header-section-number">5.2</span> Microsoft Azure - usługi</h2>
 
 
 </section>
@@ -620,13 +626,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01-linux.html" class="pagination-link" aria-label="Wprowadzenie do linuxa">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wprowadzenie do linuxa</span></span>
+      <a href="./02a-azure-intro.html" class="pagination-link" aria-label="Microsoft Azure - część 1">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 1</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03-ci_cd.html" class="pagination-link" aria-label="CI/CD">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CI/CD</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">CI/CD</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

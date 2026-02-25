@@ -1,57 +1,27 @@
-# Organizacja zajęć
 
-Zajęcia odbywają się w trybie hybrydowym. 
 
-Planowany program zajęć jest następujący:
+# Rejestracja i Azure Portal
 
-| Tydzień zajęć | Temat                  | Uwagi                                    |
-|---------------|------------------------|------------------------------------------|
-| 1             | Zajęcia organizacyjne  |                                          |
-| 2-3           | Wprowadzenie do linuxa |                                          |
-| 4-5           | Azure                  |                                          |
-| 6-7           | CI/CD                  | Deklaracja wyboru technologii chmurowej  |
-| 8-9           | Docker                 |                                          |
-| 10-11         | Ansible                |                                          |
-| 12-13         | Terraform              |                                          |
-| 14-15         | Prezentacja projektów  |                                          |
 
-## Materiały
-
-Niniejszy skrypt zawiera najważniejsze zagadnienia realizowane podczas zajęć. W celu uzupełnienia wiedzy można sięgnąć do następujących zasobów:
-
-- [Introduction to Cloud Infrastructure Technologies](https://trainingportal.linuxfoundation.org/courses/introduction-to-cloud-infrastructure-technologies)
-
-- [Microsoft Learn](https://learn.microsoft.com/pl-pl/training/)
-
-## Zaliczenie
-
-Na zaliczenie należy przygotować projekt grupowy polegający na przygotowaniu wdrożenia wybranej aplikacji w wybranej technologii chmurowej. Ocenie podlega sprawozdanie z przeprowadzonego wdrożenia. W połowie semestru studenci dokonują deklaracji wybranej technologii chmurowej.
-
-Wymagania projektowe:
-
-![](img/00_files/image.png)
-
-Sprawozdanie z projektu ma zostać załadowane na platformę moodle. Podczas dwóch ostatnich tygodni zajęć odbędzie się prezentacja wykonanych projektów.
-
-## Rejestracja na Azure Portal
-
-Krok 1: Założenie konta Azure for Students
+#### Krok 1: Założenie konta Azure for Students
 1. Otwórz: https://azure.microsoft.com/en-us/free/students/
 2. Kliknij **"Start Free"** (lub coś podobnego)
 3. Zaloguj się kontem uczelnianym
 
 ❗ **Nie potrzeba karty kredytowej!**
 
-Krok 2: Pierwsze kroki w Azure Portal
+#### Krok 2: Pierwsze kroki w Azure Portal
 1. Otwórz: **https://portal.azure.com**
 2. Zaloguj się tym samym kontem
 
-Krok 3: Sprawdzenie subskrypcji
+
+#### Krok 3: Sprawdzenie subskrypcji
 1. W wyszukiwarce wpisz: **"Subscriptions"**
 2. Kliknij na swoją subskrypcję **"Azure for Students"**
 3. Zobacz swoje 100$ (lub €) kredytów
 
-### Instalacja Azure-CLI
+# Instalacja Azure-CLI
+
 
 ```bash
 # instalacja azure-cli na macOS
@@ -70,11 +40,13 @@ az login
 # Zaloguj się w otwartym oknie przeglądarki i wybierz subskrypcje w terminalu
 ```
 
-### GitHub Developer Pack
+
+# GitHub Developer Pack
 
 ❗ **Wymagana wazna legitymacja legitymacja!**\
 ❗ **Wymaganay telefon!**\
 ❗ **Weryfikacja moze zająć do dwóch tygodni!**
+
 
 1. Otwórz: https://education.github.com/pack
 2. Kliknij **"Sign Up for Student Developer Pack"** (lub coś podobnego)

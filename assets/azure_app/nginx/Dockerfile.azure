@@ -1,0 +1,9 @@
+FROM nginx:alpine
+
+# Usuń domyślną konfigurację
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Skopiuj konfigurację dla Azure (używa localhost)
+COPY nginx.azure.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
