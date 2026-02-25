@@ -210,7 +210,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#windows-subsystem-for-linux-wsl-2" id="toc-windows-subsystem-for-linux-wsl-2" class="nav-link" data-scroll-target="#windows-subsystem-for-linux-wsl-2"><span class="header-section-number">2.1.2</span> Windows Subsystem for Linux (WSL 2)</a></li>
   <li><a href="#instalacja" id="toc-instalacja" class="nav-link" data-scroll-target="#instalacja"><span class="header-section-number">2.1.3</span> Instalacja</a></li>
   </ul></li>
-  <li><a href="#podstawowe-komendy-linux" id="toc-podstawowe-komendy-linux" class="nav-link" data-scroll-target="#podstawowe-komendy-linux"><span class="header-section-number">2.2</span> Podstawowe komendy Linux</a></li>
+  <li><a href="#podstawowe-komendy-linux" id="toc-podstawowe-komendy-linux" class="nav-link" data-scroll-target="#podstawowe-komendy-linux"><span class="header-section-number">2.2</span> Podstawowe komendy Linux</a>
+  <ul class="collapse">
+  <li><a href="#dostęp-i-uprawnienia" id="toc-dostęp-i-uprawnienia" class="nav-link" data-scroll-target="#dostęp-i-uprawnienia"><span class="header-section-number">2.2.1</span> Dostęp i uprawnienia</a></li>
+  <li><a href="#edycja-plików-i-nawigacja" id="toc-edycja-plików-i-nawigacja" class="nav-link" data-scroll-target="#edycja-plików-i-nawigacja"><span class="header-section-number">2.2.2</span> Edycja plików i nawigacja</a></li>
+  <li><a href="#transfer-plików" id="toc-transfer-plików" class="nav-link" data-scroll-target="#transfer-plików"><span class="header-section-number">2.2.3</span> Transfer plików</a></li>
+  <li><a href="#zarządzanie-systemem-i-siecią" id="toc-zarządzanie-systemem-i-siecią" class="nav-link" data-scroll-target="#zarządzanie-systemem-i-siecią"><span class="header-section-number">2.2.4</span> Zarządzanie systemem i siecią</a></li>
+  <li><a href="#inne-komendy" id="toc-inne-komendy" class="nav-link" data-scroll-target="#inne-komendy"><span class="header-section-number">2.2.5</span> Inne komendy</a></li>
+  <li><a href="#zadania" id="toc-zadania" class="nav-link" data-scroll-target="#zadania"><span class="header-section-number">2.2.6</span> Zadania</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -292,8 +300,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="podstawowe-komendy-linux" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="podstawowe-komendy-linux"><span class="header-section-number">2.2</span> Podstawowe komendy Linux</h2>
+<p>Pracujemy na <strong>Ubuntu Server 24.04 LTS</strong>. To system “headless” (bez interfejsu graficznego), więc wszystko, co zrobimy, przejdzie przez klawiaturę.</p>
+<section id="dostęp-i-uprawnienia" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="dostęp-i-uprawnienia"><span class="header-section-number">2.2.1</span> Dostęp i uprawnienia</h3>
+<p>W chmurze rzadko siedzisz fizycznie przy maszynie. Zazwyczaj łączysz się z nią zdalnie.</p>
+<ul>
+<li><p><code>ssh user@host</code>: Protokół Secure Shell. Pozwala na bezpieczne logowanie do zdalnego serwera. <em>Przykład:</em> <code>ssh student@192.168.1.10</code></p></li>
+<li><p><code>sudo</code>: “SuperUser DO”. Pozwala wykonać komendę z uprawnieniami administratora (root). Używajcie z rozwagą – z dużą mocą wiąże się duża odpowiedzialność (i ryzyko usunięcia połowy systemu). <em>Przykład:</em> <code>sudo apt update</code></p></li>
+</ul>
+</section>
+<section id="edycja-plików-i-nawigacja" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="edycja-plików-i-nawigacja"><span class="header-section-number">2.2.2</span> Edycja plików i nawigacja</h3>
+<p>W świecie terminala pliki konfiguracyjne to podstawa.</p>
+<ul>
+<li><p><code>nano</code>: Prosty, intuicyjny edytor tekstu w terminalu. <em>Skróty:</em> <code>Ctrl + O</code> (zapisz), <code>Ctrl + X</code> (wyjdź).</p></li>
+<li><p><code>ls -la</code>: Wyświetla listę plików w katalogu, w tym te ukryte (z kropką na początku) oraz ich uprawnienia.</p></li>
+<li><p><code>cd</code> / <code>pwd</code>: Zmiana katalogu (<code>cd ..</code> – poziom wyżej) oraz sprawdzenie aktualnej ścieżki (Print Working Directory).</p></li>
+</ul>
+</section>
+<section id="transfer-plików" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="transfer-plików"><span class="header-section-number">2.2.3</span> Transfer plików</h3>
+<ul>
+<li><code>scp</code>: Secure Copy. Służy do przesyłania plików między Twoim komputerem a serwerem. <em>Z lokalnego na serwer:</em> <code>scp plik.txt user@ip:/home/user/</code></li>
+</ul>
+</section>
+<section id="zarządzanie-systemem-i-siecią" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="zarządzanie-systemem-i-siecią"><span class="header-section-number">2.2.4</span> Zarządzanie systemem i siecią</h3>
+<ul>
+<li><p><code>ip a</code>: Sprawdzenie adresów IP przypisanych do interfejsów sieciowych.</p></li>
+<li><p><code>top</code> / <code>htop</code>: Menedżer zadań. Sprawdzasz, co “zjada” RAM i procesor.</p></li>
+<li><p><code>apt</code>: Menedżer pakietów (instalowanie softu).</p></li>
+</ul>
+</section>
+<section id="inne-komendy" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="inne-komendy"><span class="header-section-number">2.2.5</span> Inne komendy</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Komenda</th>
+<th>Opis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>mkdir nazwa</code></td>
+<td>Tworzy nowy katalog</td>
+</tr>
+<tr class="even">
+<td><code>touch plik</code></td>
+<td>Tworzy pusty plik</td>
+</tr>
+<tr class="odd">
+<td><code>rm plik</code></td>
+<td>Usuwa plik (<code>rm -r</code> dla katalogów – ostrożnie!)</td>
+</tr>
+<tr class="even">
+<td><code>cat plik</code></td>
+<td>Wyświetla zawartość pliku w terminalu</td>
+</tr>
+<tr class="odd">
+<td><code>chmod 600 plik</code></td>
+<td>Zmienia uprawnienia pliku (ważne przy kluczach SSH)</td>
+</tr>
+<tr class="even">
+<td><code>history</code></td>
+<td>Pokazuje listę ostatnio używanych komend</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="zadania" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="zadania"><span class="header-section-number">2.2.6</span> Zadania</h3>
+<p>Wykonaj poniższe kroki, aby oswoić się ze środowiskiem Ubuntu Server.</p>
+<section id="zadanie-1-rekonesans" class="level4" data-number="2.2.6.1">
+<h4 data-number="2.2.6.1" class="anchored" data-anchor-id="zadanie-1-rekonesans"><span class="header-section-number">2.2.6.1</span> Zadanie 1: Rekonesans</h4>
+<ol type="1">
+<li>Zaloguj się na serwer przez <strong>SSH</strong>.</li>
+<li>Sprawdź aktualną datę (<code>date</code>) oraz czas działania systemu (<code>uptime</code>).</li>
+<li>Sprawdź, ile miejsca na dysku pozostało wolnego (<code>df -h</code>).</li>
+</ol>
+</section>
+<section id="zadanie-2-tworzenie-struktury" class="level4" data-number="2.2.6.2">
+<h4 data-number="2.2.6.2" class="anchored" data-anchor-id="zadanie-2-tworzenie-struktury"><span class="header-section-number">2.2.6.2</span> Zadanie 2: Tworzenie struktury</h4>
+<ol type="1">
+<li>W swoim katalogu domowym utwórz folder <code>projekt_chmura</code>.</li>
+<li>Wejdź do niego i stwórz plik <code>config.txt</code> używając edytora <strong>nano</strong>.</li>
+<li>Wpisz w nim: “Witaj w chmurze, [Twoje Imię]”. Zapisz i wyjdź.</li>
+</ol>
+</section>
+<section id="zadanie-3-przesyłanie-danych" class="level4" data-number="2.2.6.3">
+<h4 data-number="2.2.6.3" class="anchored" data-anchor-id="zadanie-3-przesyłanie-danych"><span class="header-section-number">2.2.6.3</span> Zadanie 3: Przesyłanie danych</h4>
+<ol type="1">
+<li>Wyloguj się z serwera (komenda <code>exit</code>).</li>
+<li>Ze swojego lokalnego komputera prześlij dowolny obrazek lub plik tekstowy do folderu <code>projekt_chmura</code> na serwerze, używając <strong>scp</strong>.</li>
+<li>Zaloguj się ponownie i sprawdź, czy plik tam jest.</li>
+</ol>
+</section>
+<section id="zadanie-4-administracja-sudo" class="level4" data-number="2.2.6.4">
+<h4 data-number="2.2.6.4" class="anchored" data-anchor-id="zadanie-4-administracja-sudo"><span class="header-section-number">2.2.6.4</span> Zadanie 4: Administracja (sudo)</h4>
+<ol type="1">
+<li>Spróbuj zaktualizować listę pakietów komendą <code>apt update</code>. Zobacz, co się stanie.</li>
+<li>Użyj <strong>sudo</strong>, aby poprawnie wykonać aktualizację: <code>sudo apt update</code>.</li>
+<li>Zainstaluj narzędzie <code>neofetch</code> (<code>sudo apt install neofetch</code>) i uruchom je, aby zobaczyć podsumowanie systemu.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Pro tip:</strong> Jeśli utkniesz i nie wiesz, co robi dana komenda, wpisz <code>man &lt;komenda&gt;</code> (np. <code>man scp</code>), aby wyświetlić manual.</p>
+</blockquote>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

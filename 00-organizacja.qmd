@@ -36,20 +36,36 @@ Sprawozdanie z projektu ma zostać załadowane na platformę moodle. Podczas dw�
 ## Rejestracja na Azure Portal
 
 Krok 1: Założenie konta Azure for Students
+
 1. Otwórz: https://azure.microsoft.com/en-us/free/students/
+
 2. Kliknij **"Start Free"** (lub coś podobnego)
+
 3. Zaloguj się kontem uczelnianym
 
 ❗ **Nie potrzeba karty kredytowej!**
 
 Krok 2: Pierwsze kroki w Azure Portal
+
 1. Otwórz: **https://portal.azure.com**
+
 2. Zaloguj się tym samym kontem
 
 Krok 3: Sprawdzenie subskrypcji
+
 1. W wyszukiwarce wpisz: **"Subscriptions"**
+
 2. Kliknij na swoją subskrypcję **"Azure for Students"**
+
 3. Zobacz swoje 100$ (lub €) kredytów
+
+Krok 4: Centrum edukacyjne
+
+1. W wyszukiwarce wpisz: **"Education"**
+
+2. Przejdź do usługi **"Microsoft Azure Education"**
+
+3. Zobacz podgląd subskrypcji oraz materiały szkoleniowe
 
 ### Instalacja Azure-CLI
 

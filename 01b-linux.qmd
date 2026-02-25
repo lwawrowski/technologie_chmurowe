@@ -1,2 +1,74 @@
 ## Podstawowe komendy Linux
 
+Pracujemy na **Ubuntu Server 24.04 LTS**. To system "headless" (bez interfejsu graficznego), więc wszystko, co zrobimy, przejdzie przez klawiaturę. 
+
+### Dostęp i uprawnienia
+
+W chmurze rzadko siedzisz fizycznie przy maszynie. Zazwyczaj łączysz się z nią zdalnie.
+
+- `ssh user@host`: Protokół Secure Shell. Pozwala na bezpieczne logowanie do zdalnego serwera. *Przykład:* `ssh student@192.168.1.10`
+
+- `sudo`: "SuperUser DO". Pozwala wykonać komendę z uprawnieniami administratora (root). Używajcie z rozwagą – z dużą mocą wiąże się duża odpowiedzialność (i ryzyko usunięcia połowy systemu). *Przykład:* `sudo apt update`
+
+### Edycja plików i nawigacja
+
+W świecie terminala pliki konfiguracyjne to podstawa.
+
+- `nano`: Prosty, intuicyjny edytor tekstu w terminalu. *Skróty:* `Ctrl + O` (zapisz), `Ctrl + X` (wyjdź).
+
+- `ls -la`: Wyświetla listę plików w katalogu, w tym te ukryte (z kropką na początku) oraz ich uprawnienia.
+
+- `cd` / `pwd`: Zmiana katalogu (`cd ..` – poziom wyżej) oraz sprawdzenie aktualnej ścieżki (Print Working Directory).
+
+### Transfer plików
+
+- `scp`: Secure Copy. Służy do przesyłania plików między Twoim komputerem a serwerem. *Z lokalnego na serwer:* `scp plik.txt user@ip:/home/user/`
+
+### Zarządzanie systemem i siecią
+
+- `ip a`: Sprawdzenie adresów IP przypisanych do interfejsów sieciowych.
+
+- `top` / `htop`: Menedżer zadań. Sprawdzasz, co "zjada" RAM i procesor.
+
+- `apt`: Menedżer pakietów (instalowanie softu).
+
+### Inne komendy
+
+| Komenda | Opis |
+| --- | --- |
+| `mkdir nazwa` | Tworzy nowy katalog |
+| `touch plik` | Tworzy pusty plik |
+| `rm plik` | Usuwa plik (`rm -r` dla katalogów – ostrożnie!) |
+| `cat plik` | Wyświetla zawartość pliku w terminalu |
+| `chmod 600 plik` | Zmienia uprawnienia pliku (ważne przy kluczach SSH) |
+| `history` | Pokazuje listę ostatnio używanych komend |
+
+### Zadania
+
+Wykonaj poniższe kroki, aby oswoić się ze środowiskiem Ubuntu Server.
+
+#### Zadanie 1: Rekonesans
+
+1. Zaloguj się na serwer przez **SSH**.
+2. Sprawdź aktualną datę (`date`) oraz czas działania systemu (`uptime`).
+3. Sprawdź, ile miejsca na dysku pozostało wolnego (`df -h`).
+
+#### Zadanie 2: Tworzenie struktury
+
+1. W swoim katalogu domowym utwórz folder `projekt_chmura`.
+2. Wejdź do niego i stwórz plik `config.txt` używając edytora **nano**.
+3. Wpisz w nim: "Witaj w chmurze, [Twoje Imię]". Zapisz i wyjdź.
+
+#### Zadanie 3: Przesyłanie danych
+
+1. Wyloguj się z serwera (komenda `exit`).
+2. Ze swojego lokalnego komputera prześlij dowolny obrazek lub plik tekstowy do folderu `projekt_chmura` na serwerze, używając **scp**.
+3. Zaloguj się ponownie i sprawdź, czy plik tam jest.
+
+#### Zadanie 4: Administracja (sudo)
+
+1. Spróbuj zaktualizować listę pakietów komendą `apt update`. Zobacz, co się stanie.
+2. Użyj **sudo**, aby poprawnie wykonać aktualizację: `sudo apt update`.
+3. Zainstaluj narzędzie `neofetch` (`sudo apt install neofetch`) i uruchom je, aby zobaczyć podsumowanie systemu.
+
+> **Pro tip:** Jeśli utkniesz i nie wiesz, co robi dana komenda, wpisz `man <komenda>` (np. `man scp`), aby wyświetlić manual. 
