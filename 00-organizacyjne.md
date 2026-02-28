@@ -31,6 +31,8 @@ brew install azure-cli
 # lub na windows
 winget install --exact --id Microsoft.AzureCLI
 
+# Po instalacji wyłącz terminal i załącz ponownie
+
 # Zweryfikuj instalacje
 az version
 
