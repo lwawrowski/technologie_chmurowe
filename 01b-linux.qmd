@@ -1,74 +1,613 @@
 ## Podstawowe komendy Linux
 
-Pracujemy na **Ubuntu Server 24.04 LTS**. To system "headless" (bez interfejsu graficznego), więc wszystko, co zrobimy, przejdzie przez klawiaturę. 
+Pracujemy na **Ubuntu Server 24.04 LTS**.
+Jest to system typu *headless* — bez interfejsu graficznego. Administracja odbywa się wyłącznie przez terminal.
 
-### Dostęp i uprawnienia
+W środowisku chmurowym (Azure, AWS, GCP) 99% operacji wykonuje się dokładnie w taki sposób.
 
-W chmurze rzadko siedzisz fizycznie przy maszynie. Zazwyczaj łączysz się z nią zdalnie.
+### Dostęp do serwera i uprawnienia
 
-- `ssh user@host`: Protokół Secure Shell. Pozwala na bezpieczne logowanie do zdalnego serwera. *Przykład:* `ssh student@192.168.1.10`
+SSH – zdalne logowanie
 
-- `sudo`: "SuperUser DO". Pozwala wykonać komendę z uprawnieniami administratora (root). Używajcie z rozwagą – z dużą mocą wiąże się duża odpowiedzialność (i ryzyko usunięcia połowy systemu). *Przykład:* `sudo apt update`
+```bash
+ssh user@host
+```
 
-### Edycja plików i nawigacja
+**SSH (Secure Shell)** to protokół umożliwiający bezpieczne połączenie z serwerem.
 
-W świecie terminala pliki konfiguracyjne to podstawa.
+Składnia:
 
-- `nano`: Prosty, intuicyjny edytor tekstu w terminalu. *Skróty:* `Ctrl + O` (zapisz), `Ctrl + X` (wyjdź).
+```bash
+ssh NAZWA_UŻYTKOWNIKA@ADRES_IP
+```
 
-- `ls -la`: Wyświetla listę plików w katalogu, w tym te ukryte (z kropką na początku) oraz ich uprawnienia.
+Przykład:
 
-- `cd` / `pwd`: Zmiana katalogu (`cd ..` – poziom wyżej) oraz sprawdzenie aktualnej ścieżki (Print Working Directory).
+```bash
+ssh student@192.168.56.10
+```
 
-### Transfer plików
+Co się stanie przy pierwszym połączeniu?
 
-- `scp`: Secure Copy. Służy do przesyłania plików między Twoim komputerem a serwerem. *Z lokalnego na serwer:* `scp plik.txt user@ip:/home/user/`
+- System zapyta o potwierdzenie odcisku klucza (fingerprint)
+- Wpisujesz `yes`
+- Podajesz hasło użytkownika
 
-### Zarządzanie systemem i siecią
+Wylogowanie:
 
-- `ip a`: Sprawdzenie adresów IP przypisanych do interfejsów sieciowych.
+```bash
+exit
+```
 
-- `top` / `htop`: Menedżer zadań. Sprawdzasz, co "zjada" RAM i procesor.
+lub skrót:
 
-- `apt`: Menedżer pakietów (instalowanie softu).
+```
+Ctrl + D
+```
 
-### Inne komendy
+### sudo – uprawnienia administratora
 
-| Komenda | Opis |
-| --- | --- |
-| `mkdir nazwa` | Tworzy nowy katalog |
-| `touch plik` | Tworzy pusty plik |
-| `rm plik` | Usuwa plik (`rm -r` dla katalogów – ostrożnie!) |
-| `cat plik` | Wyświetla zawartość pliku w terminalu |
-| `chmod 600 plik` | Zmienia uprawnienia pliku (ważne przy kluczach SSH) |
-| `history` | Pokazuje listę ostatnio używanych komend |
+Linux rozróżnia:
 
-### Zadania
+- zwykłego użytkownika
+- administratora (root)
 
-Wykonaj poniższe kroki, aby oswoić się ze środowiskiem Ubuntu Server.
+Polecenie:
 
-#### Zadanie 1: Rekonesans
+```bash
+sudo KOMENDA
+```
 
-1. Zaloguj się na serwer przez **SSH**.
-2. Sprawdź aktualną datę (`date`) oraz czas działania systemu (`uptime`).
-3. Sprawdź, ile miejsca na dysku pozostało wolnego (`df -h`).
+pozwala wykonać komendę jako administrator.
 
-#### Zadanie 2: Tworzenie struktury
+Przykład:
 
-1. W swoim katalogu domowym utwórz folder `projekt_chmura`.
-2. Wejdź do niego i stwórz plik `config.txt` używając edytora **nano**.
-3. Wpisz w nim: "Witaj w chmurze, [Twoje Imię]". Zapisz i wyjdź.
+```bash
+sudo apt update
+```
 
-#### Zadanie 3: Przesyłanie danych
+Po wpisaniu sudo:
 
-1. Wyloguj się z serwera (komenda `exit`).
-2. Ze swojego lokalnego komputera prześlij dowolny obrazek lub plik tekstowy do folderu `projekt_chmura` na serwerze, używając **scp**.
-3. Zaloguj się ponownie i sprawdź, czy plik tam jest.
+- system poprosi o hasło
+- hasło NIE będzie widoczne (to normalne)
 
-#### Zadanie 4: Administracja (sudo)
+### Nawigacja po systemie plików
 
-1. Spróbuj zaktualizować listę pakietów komendą `apt update`. Zobacz, co się stanie.
-2. Użyj **sudo**, aby poprawnie wykonać aktualizację: `sudo apt update`.
-3. Zainstaluj narzędzie `neofetch` (`sudo apt install neofetch`) i uruchom je, aby zobaczyć podsumowanie systemu.
+Linux ma strukturę drzewa katalogów zaczynającą się od:
 
-> **Pro tip:** Jeśli utkniesz i nie wiesz, co robi dana komenda, wpisz `man <komenda>` (np. `man scp`), aby wyświetlić manual. 
+```
+/
+```
+
+(tzw. root filesystem)
+
+Najważniejsze katalogi:
+
+| Katalog | Znaczenie             |
+| ------- | --------------------- |
+| `/home` | katalogi użytkowników |
+| `/etc`  | pliki konfiguracyjne  |
+| `/var`  | logi i dane aplikacji |
+| `/bin`  | podstawowe programy   |
+| `/usr`  | aplikacje systemowe   |
+| `/opt`  | własne programy       |
+
+Więcej informacji na ten temat można znaleźć na stronie [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html)
+
+Sprawdzanie lokalizacji
+
+```bash
+pwd
+```
+
+(Present Working Directory)
+
+Lista plików
+
+```bash
+ls
+ls -l
+ls -la
+```
+
+- `-l` → tryb szczegółowy
+- `-a` → pokazuje pliki ukryte (zaczynające się od `.`)
+
+Zmiana katalogu
+
+```bash
+cd nazwa_katalogu
+cd ..
+cd ~
+cd /
+```
+
+- `..` → poziom wyżej
+- `~` → katalog domowy użytkownika
+- `/` → katalog główny
+
+#### Zadanie
+
+1. Przejdź do /etc
+2. Wróć do katalogu domowego
+3. Wejdź do /var/log
+4. Sprawdź zawartość przez ls -la
+
+### Tworzenie i usuwanie plików
+
+Tworzenie katalogu
+
+```bash
+mkdir nazwa
+```
+
+Tworzenie pustego pliku
+
+```bash
+touch plik.txt
+```
+
+Usuwanie
+
+```bash
+rm plik.txt
+rm -r katalog
+```
+
+Uwaga!
+
+Polecenie `rm -rf /` usuwa rekurencyjnie i bez pytania wszystko zaczynając od katalogu głównego (nie testować).
+
+#### Zadanie
+
+1. W katalogu domowym utwórz katalog `projekt_chmura/logi`
+2. Wejdź do projekt_chmura
+3. Utwórz plik config.txt
+4. Sprawdź strukturę plików
+
+### Edycja plików
+
+nano – edytor tekstu
+
+```bash
+nano plik.txt
+```
+
+Najważniejsze skróty:
+
+- `Ctrl + O` → zapisz
+- `Ctrl + X` → wyjdź
+- `Ctrl + K` → wytnij linię
+- `Ctrl + U` → wklej
+
+Odczyt zawartości pliku
+
+```bash
+cat plik.txt
+less plik.txt
+```
+
+`less` pozwala przewijać:
+
+- strzałki
+- q → wyjście
+
+#### Zadanie
+
+1. W pliku config.txt wpisz:
+
+```
+Imię:
+Data:
+Nazwa serwera:
+```
+
+2. Zapisz i wyjdź.
+3. Wyświetl zawartość.
+
+### Transfer plików – scp
+
+Kopiowanie z lokalnego komputera na serwer:
+
+```bash
+scp plik.txt user@ip:/home/user/
+```
+
+Kopiowanie z serwera na lokalny komputer:
+
+```bash
+scp user@ip:/home/user/plik.txt .
+```
+
+`.` oznacza bieżący katalog.
+
+#### Zadanie
+
+1. Na serwerze utwórz plik np.:
+
+```bash
+echo "To jest test transferu" > transfer.txt
+```
+
+2. Pobierz plik na swój komputer.
+3. Zmień jego zawartość lokalnie i odeślij go z powrotem na serwer.
+4. Zaloguj się ponownie i sprawdź zawartość.
+
+### Zarządzanie pakietami (apt)
+
+Ubuntu używa menedżera pakietów `apt`.
+
+Aktualizacja listy pakietów:
+
+```bash
+sudo apt update
+```
+
+Aktualizacja systemu:
+
+```bash
+sudo apt upgrade
+```
+
+Instalacja programu:
+
+```bash
+sudo apt install htop
+```
+
+Usunięcie:
+
+```bash
+sudo apt remove htop
+```
+
+#### Zadanie
+
+Zainstaluj pakiet `neofetch`, uruchom go, a następnie odinstaluj.
+
+### Monitorowanie systemu
+
+Sprawdzenie IP
+
+```bash
+ip a
+```
+
+Zużycie zasobów
+
+```bash
+top
+htop
+```
+
+Wyjście z `top` → `q`
+
+### Procesy
+
+Lista procesów:
+
+```bash
+ps aux
+```
+
+Zabicie procesu:
+
+```bash
+kill PID
+```
+
+### Uprawnienia plików (chmod)
+
+Sprawdzenie:
+
+```bash
+ls -l
+```
+
+Przykład wyniku:
+
+```
+-rw-r--r-- 1 student student 1234 plik.txt
+```
+
+Co oznacza rwx?
+
+| Symbol | Znaczenie | Wartość |
+| ------ | --------- | ------- |
+| r      | read      |   4     |
+| w      | write     |   2     |
+| x      | execute   |   1     |
+
+Układ:
+
+```
+rwx rwx rwx
+u   g   o
+```
+
+- u → user
+- g → group
+- o → others
+
+Czyli:
+
+```
+rwx = 4 + 2 + 1 = 7
+rw- = 4 + 2 = 6
+r-- = 4
+```
+
+Przykład
+
+```bash
+chmod 600 klucz.pem
+```
+
+600 oznacza:
+
+- właściciel: read + write
+- reszta: brak dostępu
+
+Najczęściej używane w DevOps
+
+| Wartość | Zastosowanie         |
+| ------- | -------------------- |
+| 755     | katalog aplikacji    |
+| 644     | pliki konfiguracyjne |
+| 600     | klucze prywatne      |
+| 700     | ~/.ssh               |
+| 750     | katalogi zespołowe   |
+| 1777    | /tmp                 |
+
+#### Zadanie
+
+1. Ustaw prawa odczytu i zapisu dla usera i tylko odczytu dla pozostałych dla pliku `config.txt`.
+2. Utwórz katalog `sekrety` i ustaw pełen dostęp tylko dla usera.
+3. Sprawdź prawa przez `ls -l`.
+4. Dlaczego katalog potrzebuje `x`, żeby do niego wejść?
+
+### Usługi systemowe (systemd)
+
+Linux używa systemu zarządzania usługami `systemd`.
+
+Sprawdzenie statusu SSH:
+
+```bash
+systemctl status ssh
+```
+
+Restart:
+
+```bash
+sudo systemctl restart ssh
+```
+
+Włączenie przy starcie systemu:
+
+```bash
+sudo systemctl enable ssh
+```
+
+### Logi systemowe
+
+Nowoczesne systemy używają `journalctl`.
+
+Wyświetlenie logów:
+
+```bash
+journalctl
+```
+
+Logi konkretnej usługi:
+
+```bash
+journalctl -u ssh
+```
+
+Podgląd na żywo:
+
+```bash
+journalctl -f
+```
+
+#### Zadanie
+
+Otwórz dwa okienka konsoli. W jednym z nich uruchom podgląd logów na żywo, a w drugim spróbuj zalogować się błędnym hasłem. Co się stało w logach?
+
+### Klucze SSH - logowanie bez hasła
+
+W środowiskach produkcyjnych oraz w pracy DevOps **nie używa się logowania hasłem**, tylko kluczy kryptograficznych.
+
+Dlaczego?
+
+- hasła można zgadnąć lub wyciec
+- klucze są bezpieczniejsze
+- umożliwiają automatyzację (CI/CD, Ansible)
+- pozwalają wyłączyć logowanie hasłem na serwerze
+
+SSH używa kryptografii asymetrycznej:
+
+Powstają dwa klucze:
+
+- **klucz prywatny** – zostaje na Twoim komputerze
+- **klucz publiczny** – trafia na serwer
+
+Podczas logowania:
+
+1. Serwer sprawdza, czy Twój klucz publiczny jest zapisany w `authorized_keys`
+2. Jeśli tak — wysyła wyzwanie kryptograficzne
+3. Twój komputer podpisuje je kluczem prywatnym
+4. Jeśli podpis się zgadza — zostajesz zalogowany
+
+Klucz prywatny **nigdy nie może trafić na serwer ani do repozytorium**.
+
+Generowanie klucza SSH (na komputerze lokalnym) polega na wykonaniu na swoim komputerze (nie na serwerze) polecenia:
+
+```bash
+ssh-keygen
+```
+
+Zostaniesz zapytany o:
+
+```
+Enter file in which to save the key:
+```
+
+Naciśnij **Enter**, aby zaakceptować domyślną lokalizację:
+
+```
+~/.ssh/id_rsa
+```
+
+Następnie możesz ustawić hasło do klucza (passphrase) — w środowisku laboratoryjnym można zostawić puste.
+
+W katalogu `~/.ssh` pojawią się dwa pliki:
+
+| Plik         | Znaczenie                              |
+| ------------ | -------------------------------------- |
+| `id_rsa`     | klucz prywatny (tajny)                 |
+| `id_rsa.pub` | klucz publiczny (do wgrania na serwer) |
+
+Sprawdź:
+
+```bash
+ls -la ~/.ssh
+```
+
+Kolejnym krokiem jest wgranie klucza na serwer.
+
+Najprostsza metoda:
+
+```bash
+ssh-copy-id student@IP_SERWERA
+```
+
+System:
+
+- poprosi o hasło do serwera (ostatni raz)
+- automatycznie dopisze klucz do pliku `authorized_keys`
+
+Polecenie `ssh-copy-id` loguje się na serwer i dopisuje zawartość pliku:
+
+```
+~/.ssh/id_rsa.pub
+```
+
+do pliku:
+
+```
+~/.ssh/authorized_keys
+```
+
+To właśnie ten plik decyduje, kto może logować się kluczem.
+
+Gdy `ssh-copy-id` nie działa to na komputerze lokalnym trzeba uruchomić:
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+Skopiuj całą zawartość (jedna linia zaczynająca się od `ssh-rsa`).
+
+Na serwerze:
+
+```bash
+mkdir -p ~/.ssh
+nano ~/.ssh/authorized_keys
+```
+
+Wklej klucz jako osobną linię i zapisz plik.
+
+SSH odmawia logowania, jeśli prawa dostępu są zbyt szerokie.
+
+Na serwerze wykonaj:
+
+```bash
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+```
+
+Wyjaśnienie:
+
+| Element           | Wymagane prawa | Dlaczego                               |
+| ----------------- | -------------- | -------------------------------------- |
+| `~/.ssh`          | 700            | tylko właściciel może wejść            |
+| `authorized_keys` | 600            | tylko właściciel może czytać/zapisywać |
+
+Sprawdź:
+
+```bash
+ls -la ~/.ssh
+```
+
+Teraz można zrobić test logowania bez hasła. Wyloguj się:
+
+```bash
+exit
+```
+
+Zaloguj ponownie:
+
+```bash
+ssh student@IP_SERWERA
+```
+
+Jeśli konfiguracja jest poprawna:
+
+- system nie zapyta o hasło
+- logowanie nastąpi automatycznie
+
+Dodatkowo można wyłączyć logowanie hasłem (opcjonalnie).
+
+Na serwerze:
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+Znajdź:
+
+```
+PasswordAuthentication yes
+```
+
+Zmień na:
+
+```
+PasswordAuthentication no
+```
+
+Zrestartuj SSH:
+
+```bash
+sudo systemctl restart ssh
+```
+
+Wykonuj to tylko wtedy, gdy logowanie kluczem działa poprawnie.
+
+### Samodzielna pomoc
+
+Jeśli nie wiesz, co robi komenda:
+
+```bash
+man komenda
+```
+
+Przykład:
+
+```bash
+man scp
+```
+
+Szybkie wyszukiwanie w manualu:
+
+```
+/słowo
+```
+
+Wyjście:
+
+```
+q
+```
+
