@@ -1,2 +1,117 @@
 # Docker
 
+Konteneryzacja jest jedną z najważniejszych technologii wykorzystywanych we współczesnych systemach chmurowych. Umożliwia ona uruchamianie aplikacji w izolowanych środowiskach zwanych kontenerami, które zawierają zarówno kod aplikacji, jak i wszystkie jej zależności. Dzięki temu aplikacje mogą być uruchamiane w sposób powtarzalny niezależnie od środowiska – na komputerze programisty, w centrum danych lub w chmurze publicznej. 
+
+W przeciwieństwie do tradycyjnych maszyn wirtualnych kontenery nie wymagają uruchamiania pełnego systemu operacyjnego. Zamiast tego wykorzystują mechanizmy izolacji systemu operacyjnego hosta, dzięki czemu są znacznie lżejsze i uruchamiają się szybciej. Takie podejście pozwala efektywniej wykorzystywać zasoby sprzętowe oraz ułatwia skalowanie aplikacji w środowiskach chmurowych. 
+
+Jedną z najpopularniejszych platform konteneryzacji jest Docker. Platforma ta składa się z kilku podstawowych elementów. Najważniejszym z nich jest demon Dockera, czyli proces działający w tle, który odpowiada za budowanie, uruchamianie i zarządzanie kontenerami. Użytkownik komunikuje się z nim za pomocą klienta Docker CLI, czyli narzędzia wiersza poleceń. Obrazy kontenerów przechowywane są zazwyczaj w rejestrach, z których najpopularniejszym jest [Docker Hub](https://hub.docker.com/). 
+
+## Instalacja 
+
+Wszystkie możliwości instalacji dockera w systemie ubuntu są przedstawione na [stronie](https://docs.docker.com/engine/install/ubuntu/). Poniżej instrukcja dla metody używającej repozytorium `apt`.
+
+W pierwszej kolejności podajemy dane repozytorium dockera:
+
+```bash
+# Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+```
+
+A następnie instalujemy najnowszą wersję narzędzi:
+
+```bash
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Możemy zweryfikować czy usługi dockera zostały automatycznie uruchomione:
+
+```bash
+sudo systemctl status docker
+```
+
+Jeśli tak się nie stało to możemy je wystartować:
+
+```bash
+sudo systemctl start docker
+```
+
+## Podstawowe pojęcia w ekosystemie Docker
+
+Podstawowym elementem pracy z Dockerem jest obraz kontenera. Obraz można traktować jako szablon aplikacji, zawierający wszystkie niezbędne pliki, biblioteki oraz konfigurację. Na podstawie obrazu można uruchamiać wiele instancji kontenerów, które są jego działającymi egzemplarzami. Obrazy mogą być pobierane z publicznych rejestrów lub budowane samodzielnie przez użytkownika. Przykładowo można uruchomić aplikację w dwóch różnych wersjach.
+
+Kontener jest uruchomioną instancją obrazu. W praktyce oznacza to izolowany proces działający w systemie operacyjnym hosta. Kontener posiada własny system plików, interfejsy sieciowe oraz konfigurację środowiska, jednak współdzieli jądro systemu operacyjnego z hostem. Takie rozwiązanie zapewnia wysoką wydajność przy jednoczesnym zachowaniu izolacji aplikacji. 
+
+Aby uruchomić kontener, wykorzystywana jest komenda `docker run`. Polecenie to powoduje utworzenie nowego kontenera na podstawie wskazanego obrazu oraz uruchomienie określonego procesu w jego wnętrzu. Jeżeli obraz nie jest dostępny lokalnie, Docker automatycznie pobiera go z rejestru. Dzięki temu wdrażanie aplikacji może być zrealizowane za pomocą pojedynczej komendy.
+
+```bash
+$ docker run hello-world
+
+Hello from Docker.
+This message shows that your installation appears to be working correctly.
+...
+```
+
+## Tworzenie własnego obrazu aplikacji
+
+W wielu przypadkach konieczne jest przygotowanie własnego obrazu zawierającego aplikację użytkownika. W tym celu wykorzystywany jest plik konfiguracyjny o nazwie Dockerfile. Jest to prosty plik tekstowy zawierający instrukcje opisujące kolejne kroki budowania obrazu. Instrukcje te przypominają polecenia systemu Linux, co sprawia, że tworzenie Dockerfile jest stosunkowo proste nawet dla początkujących użytkowników. 
+
+Proces budowania obrazu rozpoczyna się od określenia obrazu bazowego za pomocą instrukcji `FROM`. Obraz bazowy zawiera podstawowe środowisko systemowe lub runtime potrzebny do uruchomienia aplikacji, na przykład interpreter języka Python. Następnie określa się katalog roboczy wewnątrz kontenera oraz kopiuje pliki aplikacji z systemu hosta do systemu plików obrazu.
+
+Kolejnym etapem jest instalacja zależności aplikacji, na przykład bibliotek wymaganych przez środowisko programistyczne. Po wykonaniu tych operacji określany jest port, na którym aplikacja będzie dostępna, oraz polecenie startowe uruchamiane po uruchomieniu kontenera. Dzięki temu kontener automatycznie rozpocznie działanie aplikacji po jego uruchomieniu.
+
+Po przygotowaniu pliku Dockerfile obraz budowany jest za pomocą polecenia `docker build`. Komenda ta analizuje kolejne instrukcje w pliku i tworzy warstwowy obraz kontenera. Każda instrukcja Dockerfile tworzy nową warstwę obrazu, co pozwala na efektywne wykorzystanie mechanizmu cache podczas kolejnych procesów budowania.
+
+## Uruchamianie aplikacji w kontenerze
+
+Po zbudowaniu obrazu aplikacja może zostać uruchomiona w kontenerze. W tym celu wykorzystywana jest komenda `docker run`, która umożliwia również mapowanie portów pomiędzy kontenerem a systemem hosta. Mapowanie portów jest niezbędne w przypadku aplikacji sieciowych, ponieważ pozwala na dostęp do usług działających w kontenerze z poziomu przeglądarki internetowej lub innych aplikacji.
+
+Na przykład aplikacja działająca na porcie 5000 wewnątrz kontenera może zostać udostępniona na porcie 8888 systemu hosta. Dzięki temu użytkownik może uzyskać dostęp do aplikacji poprzez adres `http://localhost:8888`. Takie podejście umożliwia uruchamianie wielu kontenerów jednocześnie bez konfliktów portów.
+
+## Środowiska wielokontenerowe
+
+W praktycznych zastosowaniach aplikacje rzadko składają się z jednego kontenera. Typowa aplikacja internetowa może obejmować kilka komponentów, takich jak serwer aplikacji, baza danych, system cache czy wyszukiwarka. Zarządzanie taką architekturą przy użyciu pojedynczych poleceń `docker run` byłoby skomplikowane i podatne na błędy.
+
+Rozwiązaniem tego problemu jest narzędzie Docker Compose. Jest to narzędzie umożliwiające definiowanie i uruchamianie środowisk wielokontenerowych przy użyciu jednego pliku konfiguracyjnego. W pliku tym opisuje się wszystkie usługi wchodzące w skład aplikacji oraz relacje pomiędzy nimi.
+
+Docker Compose wywodzi się z projektu o nazwie Fig, który został stworzony w celu ułatwienia pracy z wieloma kontenerami w środowiskach programistycznych. Popularność tego narzędzia doprowadziła do jego przejęcia przez firmę Docker i przekształcenia w oficjalny projekt Docker Compose. Obecnie jest on standardowym narzędziem do zarządzania aplikacjami wielokontenerowymi w wielu środowiskach – od lokalnego developmentu po środowiska testowe i systemy CI/CD.
+
+## Plik docker-compose.yml
+
+Konfiguracja środowiska wielokontenerowego zapisywana jest w pliku `docker-compose.yml`. Plik ten wykorzystuje składnię YAML i zawiera definicję wszystkich usług wchodzących w skład aplikacji. Każda usługa odpowiada jednemu kontenerowi oraz określa obraz, porty, wolumeny danych oraz inne parametry uruchomienia.
+
+Przykładowa konfiguracja może zawierać dwie usługi: serwer aplikacji oraz usługę wyszukiwania opartą na Elasticsearch. Dla każdej z nich określany jest obraz kontenera, a także dodatkowe parametry konfiguracyjne, takie jak zmienne środowiskowe czy mapowanie portów.
+
+Istotnym elementem konfiguracji są wolumeny danych. Pozwalają one na przechowywanie danych poza systemem plików kontenera, dzięki czemu dane mogą być zachowane nawet po usunięciu kontenera. Jest to szczególnie ważne w przypadku baz danych lub systemów przechowujących duże ilości informacji.
+
+Plik konfiguracyjny może również definiować zależności pomiędzy usługami. Parametr `depends_on` pozwala określić, że jeden kontener powinien zostać uruchomiony dopiero po starcie innego. Dzięki temu można zapewnić poprawną kolejność uruchamiania elementów systemu, na przykład najpierw bazy danych, a następnie aplikacji korzystającej z tej bazy.
+
+## Uruchamianie środowiska z Docker Compose
+
+Po przygotowaniu pliku konfiguracyjnego środowisko wielokontenerowe może zostać uruchomione za pomocą pojedynczej komendy `docker compose up`. Polecenie to automatycznie pobiera wymagane obrazy, tworzy kontenery oraz konfiguruje sieć pomiędzy nimi. W efekcie wszystkie komponenty aplikacji uruchamiane są jednocześnie i mogą komunikować się ze sobą w ramach wspólnej sieci.
+
+Docker Compose automatycznie tworzy również sieć wirtualną dla wszystkich usług zdefiniowanych w pliku konfiguracyjnym. Dzięki temu kontenery mogą odnajdywać się wzajemnie przy użyciu nazw usług jako nazw hostów. Mechanizm ten znacznie upraszcza konfigurację komunikacji pomiędzy komponentami aplikacji.
+
+Środowisko może zostać uruchomione w trybie interaktywnym lub w trybie odłączonym. W trybie odłączonym (`-d`) kontenery działają w tle, a użytkownik odzyskuje dostęp do terminala. Jest to szczególnie przydatne podczas pracy z aplikacjami webowymi lub w środowiskach serwerowych.
+
+## Zarządzanie cyklem życia środowiska
+
+Docker Compose umożliwia również łatwe zarządzanie cyklem życia aplikacji. Polecenie `docker compose ps` pozwala wyświetlić listę uruchomionych usług oraz informacje o ich stanie i portach. W ten sposób można szybko zweryfikować, czy wszystkie komponenty aplikacji działają poprawnie.
+
+Zatrzymanie środowiska odbywa się za pomocą polecenia `docker compose down`. Komenda ta zatrzymuje i usuwa wszystkie kontenery utworzone przez Compose oraz usuwa utworzoną sieć. Opcjonalnie możliwe jest również usunięcie wolumenów danych, co powoduje całkowite usunięcie wszystkich danych aplikacji.
+
+Dzięki zastosowaniu Docker Compose zarządzanie złożonymi aplikacjami składającymi się z wielu usług staje się znacznie prostsze. Cała konfiguracja infrastruktury aplikacji zapisana jest w jednym pliku, co ułatwia jej wersjonowanie, automatyzację wdrożeń oraz integrację z narzędziami ciągłej integracji i dostarczania oprogramowania.
