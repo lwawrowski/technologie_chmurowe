@@ -1,2 +1,100 @@
-## Microsoft Azure - rozliczenia
+## Przewidywanie i szacowanie kosztów w Microsoft Azure
+
+### Cel ćwiczenia
+
+Poznanie mechanizmów i narzędzi Azure służących do monitorowania, przewidywania oraz optymalizacji kosztów w chmurze.
+
+
+## Czego student się dowie?
+
+- Jak działa model rozliczeń i fakturowania w Azure
+- Jak korzystać z Azure Cost Management + Billing
+- Jak skonfigurować budżety i alerty kosztowe
+- Jak przewidywać koszty na podstawie aktualnych danych
+- Podstawy optymalizacji kosztów w środowisku chmurowym
+
+## Czego się nauczy?
+
+- Tworzyć i zarządzać budżetami w Azure
+- Przeglądać raporty kosztowe i trendy w kosztach
+- Ustawiać alerty na przekroczenie progów budżetowych
+- Wykorzystywać narzędzia do analizy i prognozowania wydatków
+
+## Co będzie umiał po zakończeniu ćwiczenia?
+
+- Samodzielnie monitorować koszty w subskrypcji Azure
+- Przewidywać przyszłe koszty bazując na danych historycznych
+- Efektywnie zarządzać budżetem i uniknąć nieplanowanych wydatków
+
+
+### Instrukcja
+
+#### Krok 1: Zaloguj się do  Portalu Azure
+
+- Otwórz [https://portal.azure.com](https://portal.azure.com)
+- Zaloguj się na swoje konto Azure (Azure dla studentów)
+
+
+#### Krok 2: Otwórz Cost Management + Billing
+
+- W menu po lewej wyszukaj **„Cost Management + Billing”**, kliknij
+- Wybierz swoją subskrypcję (np. Azure for Students)
+
+
+#### Krok 3: Przeglądnij bieżące koszty
+
+- W zakładce **Cost Analysis** zobaczysz wykresy i raporty dotyczące aktualnych wydatków
+- Możesz filtrować dane według usług, zasobów, lokalizacji i czasu. Wypróbuj.
+
+
+#### Krok 4: Ustaw (zaplanuj) budżet
+
+1. Przejdź do zakładki **Budgets**
+2. Kliknij **Add** (Dodaj nowy budżet)
+3. Nazwij budżet (np. „Budżet miesięczny”)
+4. Wybierz subskrypcję oraz zakres dat (np. na miesiąc)
+5. Ustaw limit kwotowy (np. 50 USD)
+6. Kliknij **Next**
+
+
+#### Krok 5: Skonfiguruj alerty
+
+- Możesz ustawić alerty na określony procent wykorzystania budżetu (np. 80%, 100%)
+- Wprowadź adres e-mail do powiadomień
+- Zatwierdź ustawienia
+
+Ustaw niski alert (np 2%, 5% by spowodować wygenerowanie sie alertu) i sprawdź działanie.
+
+#### Krok 6: Przewidywanie kosztów
+
+- W zakładce **Cost Analysis** kliknij na opcję **Forecast** (Prognoza)
+- System wyświetli przewidywane koszty na koniec okresu rozliczeniowego na podstawie dotychczasowych danych
+- Analizuj wykres i dostosuj budżet lub zasoby, jeśli prognoza jest niekorzystna
+
+
+#### Krok 7: Szczegółowa Analiza kosztów
+
+- Wybierz konkretną usługę lub zasób, aby zobaczyć szczegółowe zużycie i koszty
+- Wykorzystaj filtry, aby zoptymalizować raporty pod kątem potrzeb
+
+
+#### Krok 8: Korzystanie z Azure Pricing Calculator (opcjonalnie)
+
+- Przejdź do [https://azure.microsoft.com/pricing/calculator/](https://azure.microsoft.com/pricing/calculator/)
+- Symuluj koszty planowanych zasobów i usług
+- Zapisz i porównaj różne scenariusze (min 3).
+
+**Dodatkowo:** Spróbuj znaleźć rozwiązanie umożliwiające całkowicie darmowe uruchomienie prostej aplikacji webowej, tzn. sprawdź, czy i co "zoptymalizować" (może zmiana założeń projektowych, architektury rozwiązania?), by można było korzystać z usług w chmurze za darmo (lub znacząco zredukować koszty).
+
+
+### Krok 9 Przygotuj sprawozdanie z ćwiczenia:
+
+* Opis wykonanych kroków,
+
+* Zrzuty ekranu.
+
+* Komentarz: co zadziałało dobrze, co Ci sprawiło trudność.
+
+* Czy i jakie udało Ci się dobrać komponenty by można było uruchomić za darmo usługę w chmurze (albo zredukować - i o ile - koszt).
+
 
