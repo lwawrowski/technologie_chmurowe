@@ -318,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> message shows that your installation appears to be working correctly.</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Jeśli nie chcesz poprzedzać każdej komendy dockera instrukcją <code>sudo</code>, należy dodać użytkownika do grupy <code>docker</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> docker <span class="va">$USER</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> docker nazwa_uzytkownika</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="pobieranie-obrazu-z-docker-hub" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="pobieranie-obrazu-z-docker-hub"><span class="header-section-number">3.4</span> Pobieranie obrazu z docker hub</h2>
@@ -365,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"nginx"</span>, <span class="st">"-g"</span>, <span class="st">"daemon off;"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Budowanie i uruchomienie:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> moj-nginx:v1 .</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 8080:80 moj-nginx:v1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 8888:80 moj-nginx:v1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="zadanie-4" class="level3" data-number="3.7.1">
 <h3 data-number="3.7.1" class="anchored" data-anchor-id="zadanie-4"><span class="header-section-number">3.7.1</span> Zadanie:</h3>
 <p>Stwórz Dockerfile dla prostej aplikacji w wybranym języku (np. Python lub Node.js), zbuduj obraz o nazwie <code>moja-aplikacja:v1</code> i uruchom go. Następnie zmień tekst wyświetlany przez aplikację w pliku źródłowym i sprawdź, czy zwykły restart kontenera (<code>docker restart</code>) wystarczy, aby zmiany były widoczne, czy konieczne jest ponowne zbudowanie obrazu.</p>

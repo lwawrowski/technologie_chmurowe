@@ -83,7 +83,7 @@ This message shows that your installation appears to be working correctly.
 Jeśli nie chcesz poprzedzać każdej komendy dockera instrukcją `sudo`, należy dodać użytkownika do grupy `docker`:
 
 ```bash
-sudo usermod -aG docker $USER
+sudo usermod -aG docker nazwa_uzytkownika
 ```
 
 ## Pobieranie obrazu z docker hub
@@ -157,7 +157,7 @@ Budowanie i uruchomienie:
 
 ```bash
 docker build -t moj-nginx:v1 .
-docker run -d -p 8080:80 moj-nginx:v1
+docker run -d -p 8888:80 moj-nginx:v1
 ```
 
 ### Zadanie:
