@@ -62,7 +62,7 @@ sudo systemctl start docker
 
 ### Zadanie 
 
-Spróbuj znaleźć w sieci informacje o tym, jak firma Google wykorzystała kontenery do optymalizacji swoich centrów danych.
+Spróbuj znaleźć w sieci informacje o tym, jak różne firmy np. Google wykorzystują kontenery do optymalizacji działalności.
 
 ## Podstawowe pojęcia w ekosystemie Docker
 
@@ -78,6 +78,12 @@ $ docker run hello-world
 Hello from Docker.
 This message shows that your installation appears to be working correctly.
 ...
+```
+
+Jeśli nie chcesz poprzedzać każdej komendy dockera instrukcją `sudo`, należy dodać użytkownika do grupy `docker`:
+
+```bash
+sudo usermod -aG docker $USER
 ```
 
 ## Pobieranie obrazu z docker hub
