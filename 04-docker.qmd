@@ -1,5 +1,15 @@
 # Docker
 
+Autor: Łukasz Wawrowski
+
+## Wprowadzenie
+
+Źródła wiedzy:
+
+- https://docs.docker.com/
+- https://www.freecodecamp.org/news/the-docker-handbook/
+- https://docker-curriculum.com/
+
 Konteneryzacja jest jedną z najważniejszych technologii wykorzystywanych we współczesnych systemach chmurowych. Umożliwia ona uruchamianie aplikacji w izolowanych środowiskach zwanych kontenerami, które zawierają zarówno kod aplikacji, jak i wszystkie jej zależności. Dzięki temu aplikacje mogą być uruchamiane w sposób powtarzalny niezależnie od środowiska – na komputerze programisty, w centrum danych lub w chmurze publicznej. 
 
 W przeciwieństwie do tradycyjnych maszyn wirtualnych kontenery nie wymagają uruchamiania pełnego systemu operacyjnego. Zamiast tego wykorzystują mechanizmy izolacji systemu operacyjnego hosta, dzięki czemu są znacznie lżejsze i uruchamiają się szybciej. Takie podejście pozwala efektywniej wykorzystywać zasoby sprzętowe oraz ułatwia skalowanie aplikacji w środowiskach chmurowych. 
@@ -50,6 +60,10 @@ Jeśli tak się nie stało to możemy je wystartować:
 sudo systemctl start docker
 ```
 
+### Zadanie 
+
+Spróbuj znaleźć w sieci informacje o tym, jak firma Google wykorzystała kontenery do optymalizacji swoich centrów danych.
+
 ## Podstawowe pojęcia w ekosystemie Docker
 
 Podstawowym elementem pracy z Dockerem jest obraz kontenera. Obraz można traktować jako szablon aplikacji, zawierający wszystkie niezbędne pliki, biblioteki oraz konfigurację. Na podstawie obrazu można uruchamiać wiele instancji kontenerów, które są jego działającymi egzemplarzami. Obrazy mogą być pobierane z publicznych rejestrów lub budowane samodzielnie przez użytkownika. Przykładowo można uruchomić aplikację w dwóch różnych wersjach.
@@ -66,21 +80,83 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 
+## Pobieranie obrazu z docker hub
+
+Zanim zbudujemy własny obraz możemy skorzystać z wielu dostępnych w repozytorium dockera. Do pobierania służy komenda:
+
+```bash
+docker pull busybox
+```
+
+Po pobraniu obraz zapisywany jest na komputerze i gotowy do użycia:
+
+```bash
+docker images
+```
+
+### Zadanie
+
+Pobierz z repozytorium Docker Hub oficjalny obraz systemu Ubuntu.
+
+## Uruchamianie kontenerów i podstawowe polecenia
+
+Jeśli kontener zostanie uruchomiony bez dodatkowych parametrów, wykona on swoje zadanie i natychmiast zakończy pracę. Aby wejść w interakcję z wnętrzem kontenera, można użyć flag `-it`, które dołączają interaktywny terminal użytkownika do procesu wewnątrz kontenera.
+
+Zarządzanie cyklem życia kontenerów obejmuje również ich monitorowanie i usuwanie. Polecenie `ps` pozwala sprawdzić aktualnie działające jednostki, a flaga `-a` rozszerza ten widok o kontenery, które już zakończyły pracę. Ważną praktyką jest regularne czyszczenie systemu z nieużywanych kontenerów za pomocą komendy `rm` lub narzędzi do automatycznego porządkowania, co zapobiega niepotrzebnemu zużyciu miejsca na dysku.
+
+```bash
+docker run -it busybox sh
+```
+
+### Zadanie
+
+Uruchom kontener Busybox z flagą `--rm`, wykonaj w nim komendę `ls` i sprawdź po wyjściu z niego, czy kontener nadal widnieje na liście `docker ps -a`.
+
+## Wdrażanie aplikacji webowych i mapowanie portów
+
+Docker znacząco upraszcza uruchamianie serwerów WWW, pozwalając na ich szybkie odpalenie z gotowych obrazów dostępnych w rejestrach. Podczas pracy z usługami sieciowymi kluczowe jest zrozumienie trybu odłączonego (detached mode), który pozwala na działanie kontenera w tle, nawet po zamknięciu okna terminala. W takim trybie konieczne jest jednak odpowiednie opublikowanie portów, aby host mógł komunikować się z aplikacją zamkniętą w kontenerze.
+
+Użytkownik ma do wyboru automatyczne mapowanie portów na losowe numery lub ręczne przypisanie konkretnego portu maszyny fizycznej do portu, na którym nasłuchuje aplikacja wewnątrz kontenera. Dzięki temu można łatwo uruchomić wiele instancji tej samej aplikacji na jednym serwerze, kierując ruch na różne porty zewnętrzne.
+
+Pobierz obraz https://hub.docker.com/r/prakhar1989/static-site/ i uruchom go.
+
+```bash
+docker run -p 8888:80 prakhar1989/static-site
+```
+
+### Zadanie
+
+Uruchom kontener ze stroną statyczną prakhar1989/static-site w trybie odłączonym (-d) i nadaj mu nazwę własną moja-strona.
+
 ## Tworzenie własnego obrazu aplikacji
 
-W wielu przypadkach konieczne jest przygotowanie własnego obrazu zawierającego aplikację użytkownika. W tym celu wykorzystywany jest plik konfiguracyjny o nazwie Dockerfile. Jest to prosty plik tekstowy zawierający instrukcje opisujące kolejne kroki budowania obrazu. Instrukcje te przypominają polecenia systemu Linux, co sprawia, że tworzenie Dockerfile jest stosunkowo proste nawet dla początkujących użytkowników. 
+Proces tworzenia niestandardowego obrazu opiera się na pliku tekstowym o nazwie **Dockerfile**, który zawiera zestaw instrukcji automatyzujących budowę środowiska. Każda linia w tym pliku odpowiada za utworzenie nowej warstwy obrazu, co pozwala na optymalizację i ponowne wykorzystanie gotowych elementów. Instrukcje w Dockerfile są bardzo zbliżone do standardowych komend systemowych Linux, dzięki czemu ich tworzenie jest intuicyjne dla osób znających terminal. Poprawnie sformułowany plik pozwala na spakowanie aplikacji wraz ze wszystkimi jej zależnościami w jedną, gotową do uruchomienia jednostkę.
 
-Proces budowania obrazu rozpoczyna się od określenia obrazu bazowego za pomocą instrukcji `FROM`. Obraz bazowy zawiera podstawowe środowisko systemowe lub runtime potrzebny do uruchomienia aplikacji, na przykład interpreter języka Python. Następnie określa się katalog roboczy wewnątrz kontenera oraz kopiuje pliki aplikacji z systemu hosta do systemu plików obrazu.
+Struktura typowego pliku Dockerfile zaczyna się od instrukcji `FROM`, która definiuje obraz bazowy, stanowiący fundament dla naszych modyfikacji. Następnie, za pomocą komendy `WORKDIR`, określa się katalog roboczy wewnątrz kontenera, do którego kopiowane są pliki aplikacji przy użyciu instrukcji `COPY` lub `ADD`. Kluczowym elementem jest instalacja niezbędnych pakietów i bibliotek poprzez instrukcję `RUN` oraz wskazanie portów komunikacyjnych za pomocą `EXPOSE`. Na końcu pliku umieszcza się instrukcję `CMD`, która definiuje domyślne polecenie wykonywane automatycznie w momencie startu kontenera.
 
-Kolejnym etapem jest instalacja zależności aplikacji, na przykład bibliotek wymaganych przez środowisko programistyczne. Po wykonaniu tych operacji określany jest port, na którym aplikacja będzie dostępna, oraz polecenie startowe uruchamiane po uruchomieniu kontenera. Dzięki temu kontener automatycznie rozpocznie działanie aplikacji po jego uruchomieniu.
+Gotowy projekt zamienia się w obraz za pomocą polecenia `docker build`, w którym flaga `-t` (tag) pozwala nadać obrazowi czytelną nazwę i wersję. Kropka na końcu komendy wskazuje na kontekst budowy, czyli bieżący katalog, w którym Docker szuka pliku Dockerfile i plików aplikacji. Po pomyślnym zbudowaniu obrazu można go uruchomić jako kontener za pomocą komendy `docker run`, pamiętając o mapowaniu portów, aby aplikacja była dostępna z poziomu hosta.
 
-Po przygotowaniu pliku Dockerfile obraz budowany jest za pomocą polecenia `docker build`. Komenda ta analizuje kolejne instrukcje w pliku i tworzy warstwowy obraz kontenera. Każda instrukcja Dockerfile tworzy nową warstwę obrazu, co pozwala na efektywne wykorzystanie mechanizmu cache podczas kolejnych procesów budowania.
+Zrozumienie różnicy między restartem kontenera a budową nowego obrazu jest kluczowe dla efektywnej pracy. **Nowy obraz należy zbudować zawsze wtedy, gdy zmienia się „receptura” środowiska**, czyli instrukcje w Dockerfile (np. dodanie nowej biblioteki systemowej) lub gdy zmieniamy kod aplikacji, który został na stałe wbudowany (skopiowany) do obrazu podczas procesu budowy. Natomiast **restart kontenera wystarczy w sytuacjach, gdy potrzebujemy jedynie ponownego uruchomienia procesów wewnątrz już istniejącego środowiska**, na przykład po awarii aplikacji.
 
-## Uruchamianie aplikacji w kontenerze
+Prosty Dockerfile dla statycznej strony opartej na [Nginx](https://nginx.org/):
 
-Po zbudowaniu obrazu aplikacja może zostać uruchomiona w kontenerze. W tym celu wykorzystywana jest komenda `docker run`, która umożliwia również mapowanie portów pomiędzy kontenerem a systemem hosta. Mapowanie portów jest niezbędne w przypadku aplikacji sieciowych, ponieważ pozwala na dostęp do usług działających w kontenerze z poziomu przeglądarki internetowej lub innych aplikacji.
+```dockerfile
+FROM ubuntu:latest
+RUN apt-get update && apt-get install nginx -y
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
 
-Na przykład aplikacja działająca na porcie 5000 wewnątrz kontenera może zostać udostępniona na porcie 8888 systemu hosta. Dzięki temu użytkownik może uzyskać dostęp do aplikacji poprzez adres `http://localhost:8888`. Takie podejście umożliwia uruchamianie wielu kontenerów jednocześnie bez konfliktów portów.
+Budowanie i uruchomienie:
+
+```bash
+docker build -t moj-nginx:v1 .
+docker run -d -p 8080:80 moj-nginx:v1
+```
+
+### Zadanie:
+
+Stwórz Dockerfile dla prostej aplikacji w wybranym języku (np. Python lub Node.js), zbuduj obraz o nazwie `moja-aplikacja:v1` i uruchom go. Następnie zmień tekst wyświetlany przez aplikację w pliku źródłowym i sprawdź, czy zwykły restart kontenera (`docker restart`) wystarczy, aby zmiany były widoczne, czy konieczne jest ponowne zbudowanie obrazu.
 
 ## Środowiska wielokontenerowe
 
@@ -115,3 +191,24 @@ Docker Compose umożliwia również łatwe zarządzanie cyklem życia aplikacji.
 Zatrzymanie środowiska odbywa się za pomocą polecenia `docker compose down`. Komenda ta zatrzymuje i usuwa wszystkie kontenery utworzone przez Compose oraz usuwa utworzoną sieć. Opcjonalnie możliwe jest również usunięcie wolumenów danych, co powoduje całkowite usunięcie wszystkich danych aplikacji.
 
 Dzięki zastosowaniu Docker Compose zarządzanie złożonymi aplikacjami składającymi się z wielu usług staje się znacznie prostsze. Cała konfiguracja infrastruktury aplikacji zapisana jest w jednym pliku, co ułatwia jej wersjonowanie, automatyzację wdrożeń oraz integrację z narzędziami ciągłej integracji i dostarczania oprogramowania.
+
+### Zadanie
+
+Pobierz i uruchom przykładowy zestaw kontenerów ze strony https://github.com/docker/awesome-compose/tree/master/wordpress-mysql
+
+## Zarządzanie wolumenami i trwałość danych
+
+Kontenery Dockera są z natury efemeryczne, co oznacza, że wszelkie dane utworzone lub zmodyfikowane wewnątrz nich zostają bezpowrotnie utracone w momencie usunięcia kontenera. Aby zapobiec utracie istotnych informacji, takich jak wpisy w bazach danych czy pliki przesłane przez użytkowników, stosuje się wolumeny. Są one mechanizmem pozwalającym na przechowywanie danych poza cyklem życia samego kontenera, na systemie plików maszyny hosta, co umożliwia ich zachowanie nawet po zatrzymaniu i skasowaniu instancji aplikacji.
+
+Zarządzanie wolumenami odbywa się za pomocą dedykowanych poleceń CLI, które pozwalają na ich tworzenie, wyświetlanie oraz usuwanie. Docker oferuje różne typy trwałości danych, z których najczęściej stosowane to wolumeny nazwane (zarządzane całkowicie przez Dockera) oraz montowania typu bind (umożliwiające bezpośrednie powiązanie katalogu z hosta z katalogiem w kontenerze). Stosowanie nazwanych wolumenów jest szczególnie polecane w scenariuszach produkcyjnych, gdyż Docker dba o ich strukturę i optymalizację, a użytkownik może łatwo odwoływać się do nich po prostej nazwie podczas uruchamiania kolejnych usług.
+
+Tworzenie nazwanego wolumenu i podpięcie go do bazy danych PostgreSQL: 
+
+```bash
+docker volume create dane-bazy 
+docker run -d --name moja-baza -v dane-bazy:/var/lib/postgresql/data postgres:12
+```
+
+### Zadanie
+
+Utwórz nazwany wolumen o nazwie `moje-pliki`, a następnie uruchom kontener z obrazem `linux alpine` w trybie interaktywnym (`-it`), montując ten wolumen w katalogu `/dane`. Wewnątrz kontenera stwórz plik testowy poleceniem `touch /dane/test.txt`, wyjdź z kontenera, usuń go i sprawdź, czy po uruchomieniu nowego kontenera z tym samym wolumenem plik `test.txt` nadal istnieje w katalogu `/dane`.

@@ -33,6 +33,32 @@ Wymagania projektowe:
 
 Sprawozdanie z projektu ma zostać załadowane na platformę moodle. Podczas dwóch ostatnich tygodni zajęć odbędzie się prezentacja wykonanych projektów.
 
+Do projektu należy dołączyć sprawozdanie w formie dokumentu (PDF) opisujące wykonanie zadania. Dokument powinien umożliwiać prześledzenie procesu przygotowania i wdrożenia aplikacji.
+
+Sprawozdanie powinno zawierać następujące elementy:
+
+1. Strona tytułowa   
+  - tytuł projektu,   
+  - imię i nazwisko autora / autorów,   
+  - kierunek i rok studiów,   
+  - ocena, na którą projekt został przygotowany.   
+2. Opis projektu   
+  - krótki opis aplikacji (np. typ aplikacji CRUD, zastosowane technologie),   
+  - ogólna architektura rozwiązania (np. aplikacja, baza danych, kontenery, maszyny wirtualne).   
+3. Opis wykonanych operacji   
+  - opis kroków wykonanych podczas przygotowania projektu (np. konfiguracja środowiska, budowanie obrazu, konfiguracja infrastruktury, wdrożenie aplikacji),   
+  - do każdego istotnego etapu należy dołączyć zrzuty ekranu potwierdzające wykonanie operacji (np. działający pipeline, uruchomione kontenery, działająca aplikacja).   
+4. Uzasadnienie podjętych decyzji   
+  - wyjaśnienie wyboru zastosowanych technologii i narzędzi,   
+  - uzasadnienie sposobu wdrożenia (np. użycie kontenerów, infrastruktury jako kodu, architektury mikroserwisowej),   
+  - ewentualne problemy napotkane podczas realizacji projektu oraz sposób ich rozwiązania.   
+5. Podsumowanie   
+  - krótka ocena działania systemu,   
+  - wnioski z realizacji projektu.   
+
+Sprawozdanie powinno być przygotowane w sposób czytelny i uporządkowany, a wszystkie zrzuty ekranu powinny być opisane i powiązane z omawianym etapem pracy.
+ 
+
 ## Rejestracja na Azure Portal
 
 Krok 1: Założenie konta Azure for Students

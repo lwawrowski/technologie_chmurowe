@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Technologie chmurowe - 3&nbsp; Docker</title>
+<title>3&nbsp; Docker – Technologie chmurowe</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,17 +71,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -105,13 +112,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-docker.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Docker</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-docker.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Docker</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -120,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Technologie chmurowe</a> 
@@ -190,21 +197,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Spis treści</h2>
    
   <ul>
-  <li><a href="#instalacja" id="toc-instalacja" class="nav-link active" data-scroll-target="#instalacja"><span class="header-section-number">3.1</span> Instalacja</a></li>
-  <li><a href="#podstawowe-pojęcia-w-ekosystemie-docker" id="toc-podstawowe-pojęcia-w-ekosystemie-docker" class="nav-link" data-scroll-target="#podstawowe-pojęcia-w-ekosystemie-docker"><span class="header-section-number">3.2</span> Podstawowe pojęcia w ekosystemie Docker</a></li>
-  <li><a href="#tworzenie-własnego-obrazu-aplikacji" id="toc-tworzenie-własnego-obrazu-aplikacji" class="nav-link" data-scroll-target="#tworzenie-własnego-obrazu-aplikacji"><span class="header-section-number">3.3</span> Tworzenie własnego obrazu aplikacji</a></li>
-  <li><a href="#uruchamianie-aplikacji-w-kontenerze" id="toc-uruchamianie-aplikacji-w-kontenerze" class="nav-link" data-scroll-target="#uruchamianie-aplikacji-w-kontenerze"><span class="header-section-number">3.4</span> Uruchamianie aplikacji w kontenerze</a></li>
-  <li><a href="#środowiska-wielokontenerowe" id="toc-środowiska-wielokontenerowe" class="nav-link" data-scroll-target="#środowiska-wielokontenerowe"><span class="header-section-number">3.5</span> Środowiska wielokontenerowe</a></li>
-  <li><a href="#plik-docker-compose.yml" id="toc-plik-docker-compose.yml" class="nav-link" data-scroll-target="#plik-docker-compose.yml"><span class="header-section-number">3.6</span> Plik docker-compose.yml</a></li>
-  <li><a href="#uruchamianie-środowiska-z-docker-compose" id="toc-uruchamianie-środowiska-z-docker-compose" class="nav-link" data-scroll-target="#uruchamianie-środowiska-z-docker-compose"><span class="header-section-number">3.7</span> Uruchamianie środowiska z Docker Compose</a></li>
-  <li><a href="#zarządzanie-cyklem-życia-środowiska" id="toc-zarządzanie-cyklem-życia-środowiska" class="nav-link" data-scroll-target="#zarządzanie-cyklem-życia-środowiska"><span class="header-section-number">3.8</span> Zarządzanie cyklem życia środowiska</a></li>
+  <li><a href="#wprowadzenie" id="toc-wprowadzenie" class="nav-link active" data-scroll-target="#wprowadzenie"><span class="header-section-number">3.1</span> Wprowadzenie</a></li>
+  <li><a href="#instalacja" id="toc-instalacja" class="nav-link" data-scroll-target="#instalacja"><span class="header-section-number">3.2</span> Instalacja</a>
+  <ul class="collapse">
+  <li><a href="#zadanie" id="toc-zadanie" class="nav-link" data-scroll-target="#zadanie"><span class="header-section-number">3.2.1</span> Zadanie</a></li>
+  </ul></li>
+  <li><a href="#podstawowe-pojęcia-w-ekosystemie-docker" id="toc-podstawowe-pojęcia-w-ekosystemie-docker" class="nav-link" data-scroll-target="#podstawowe-pojęcia-w-ekosystemie-docker"><span class="header-section-number">3.3</span> Podstawowe pojęcia w ekosystemie Docker</a></li>
+  <li><a href="#pobieranie-obrazu-z-docker-hub" id="toc-pobieranie-obrazu-z-docker-hub" class="nav-link" data-scroll-target="#pobieranie-obrazu-z-docker-hub"><span class="header-section-number">3.4</span> Pobieranie obrazu z docker hub</a>
+  <ul class="collapse">
+  <li><a href="#zadanie-1" id="toc-zadanie-1" class="nav-link" data-scroll-target="#zadanie-1"><span class="header-section-number">3.4.1</span> Zadanie</a></li>
+  </ul></li>
+  <li><a href="#uruchamianie-kontenerów-i-podstawowe-polecenia" id="toc-uruchamianie-kontenerów-i-podstawowe-polecenia" class="nav-link" data-scroll-target="#uruchamianie-kontenerów-i-podstawowe-polecenia"><span class="header-section-number">3.5</span> Uruchamianie kontenerów i podstawowe polecenia</a>
+  <ul class="collapse">
+  <li><a href="#zadanie-2" id="toc-zadanie-2" class="nav-link" data-scroll-target="#zadanie-2"><span class="header-section-number">3.5.1</span> Zadanie</a></li>
+  </ul></li>
+  <li><a href="#wdrażanie-aplikacji-webowych-i-mapowanie-portów" id="toc-wdrażanie-aplikacji-webowych-i-mapowanie-portów" class="nav-link" data-scroll-target="#wdrażanie-aplikacji-webowych-i-mapowanie-portów"><span class="header-section-number">3.6</span> Wdrażanie aplikacji webowych i mapowanie portów</a>
+  <ul class="collapse">
+  <li><a href="#zadanie-3" id="toc-zadanie-3" class="nav-link" data-scroll-target="#zadanie-3"><span class="header-section-number">3.6.1</span> Zadanie</a></li>
+  </ul></li>
+  <li><a href="#tworzenie-własnego-obrazu-aplikacji" id="toc-tworzenie-własnego-obrazu-aplikacji" class="nav-link" data-scroll-target="#tworzenie-własnego-obrazu-aplikacji"><span class="header-section-number">3.7</span> Tworzenie własnego obrazu aplikacji</a>
+  <ul class="collapse">
+  <li><a href="#zadanie-4" id="toc-zadanie-4" class="nav-link" data-scroll-target="#zadanie-4"><span class="header-section-number">3.7.1</span> Zadanie:</a></li>
+  </ul></li>
+  <li><a href="#środowiska-wielokontenerowe" id="toc-środowiska-wielokontenerowe" class="nav-link" data-scroll-target="#środowiska-wielokontenerowe"><span class="header-section-number">3.8</span> Środowiska wielokontenerowe</a></li>
+  <li><a href="#plik-docker-compose.yml" id="toc-plik-docker-compose.yml" class="nav-link" data-scroll-target="#plik-docker-compose.yml"><span class="header-section-number">3.9</span> Plik docker-compose.yml</a></li>
+  <li><a href="#uruchamianie-środowiska-z-docker-compose" id="toc-uruchamianie-środowiska-z-docker-compose" class="nav-link" data-scroll-target="#uruchamianie-środowiska-z-docker-compose"><span class="header-section-number">3.10</span> Uruchamianie środowiska z Docker Compose</a></li>
+  <li><a href="#zarządzanie-cyklem-życia-środowiska" id="toc-zarządzanie-cyklem-życia-środowiska" class="nav-link" data-scroll-target="#zarządzanie-cyklem-życia-środowiska"><span class="header-section-number">3.11</span> Zarządzanie cyklem życia środowiska</a>
+  <ul class="collapse">
+  <li><a href="#zadanie-5" id="toc-zadanie-5" class="nav-link" data-scroll-target="#zadanie-5"><span class="header-section-number">3.11.1</span> Zadanie</a></li>
+  </ul></li>
+  <li><a href="#zarządzanie-wolumenami-i-trwałość-danych" id="toc-zarządzanie-wolumenami-i-trwałość-danych" class="nav-link" data-scroll-target="#zarządzanie-wolumenami-i-trwałość-danych"><span class="header-section-number">3.12</span> Zarządzanie wolumenami i trwałość danych</a>
+  <ul class="collapse">
+  <li><a href="#zadanie-6" id="toc-zadanie-6" class="nav-link" data-scroll-target="#zadanie-6"><span class="header-section-number">3.12.1</span> Zadanie</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -226,13 +258,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
+
+<p>Autor: Łukasz Wawrowski</p>
+<section id="wprowadzenie" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="wprowadzenie"><span class="header-section-number">3.1</span> Wprowadzenie</h2>
+<p>Źródła wiedzy:</p>
+<ul>
+<li>https://docs.docker.com/</li>
+<li>https://www.freecodecamp.org/news/the-docker-handbook/</li>
+<li>https://docker-curriculum.com/</li>
+</ul>
 <p>Konteneryzacja jest jedną z najważniejszych technologii wykorzystywanych we współczesnych systemach chmurowych. Umożliwia ona uruchamianie aplikacji w izolowanych środowiskach zwanych kontenerami, które zawierają zarówno kod aplikacji, jak i wszystkie jej zależności. Dzięki temu aplikacje mogą być uruchamiane w sposób powtarzalny niezależnie od środowiska – na komputerze programisty, w centrum danych lub w chmurze publicznej.</p>
 <p>W przeciwieństwie do tradycyjnych maszyn wirtualnych kontenery nie wymagają uruchamiania pełnego systemu operacyjnego. Zamiast tego wykorzystują mechanizmy izolacji systemu operacyjnego hosta, dzięki czemu są znacznie lżejsze i uruchamiają się szybciej. Takie podejście pozwala efektywniej wykorzystywać zasoby sprzętowe oraz ułatwia skalowanie aplikacji w środowiskach chmurowych.</p>
 <p>Jedną z najpopularniejszych platform konteneryzacji jest Docker. Platforma ta składa się z kilku podstawowych elementów. Najważniejszym z nich jest demon Dockera, czyli proces działający w tle, który odpowiada za budowanie, uruchamianie i zarządzanie kontenerami. Użytkownik komunikuje się z nim za pomocą klienta Docker CLI, czyli narzędzia wiersza poleceń. Obrazy kontenerów przechowywane są zazwyczaj w rejestrach, z których najpopularniejszym jest <a href="https://hub.docker.com/">Docker Hub</a>.</p>
-<section id="instalacja" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="instalacja"><span class="header-section-number">3.1</span> Instalacja</h2>
+</section>
+<section id="instalacja" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="instalacja"><span class="header-section-number">3.2</span> Instalacja</h2>
 <p>Wszystkie możliwości instalacji dockera w systemie ubuntu są przedstawione na <a href="https://docs.docker.com/engine/install/ubuntu/">stronie</a>. Poniżej instrukcja dla metody używającej repozytorium <code>apt</code>.</p>
 <p>W pierwszej kolejności podajemy dane repozytorium dockera:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Docker's official GPG key:</span></span>
@@ -258,9 +302,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Jeśli tak się nie stało to możemy je wystartować:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start docker</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="zadanie" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="zadanie"><span class="header-section-number">3.2.1</span> Zadanie</h3>
+<p>Spróbuj znaleźć w sieci informacje o tym, jak firma Google wykorzystała kontenery do optymalizacji swoich centrów danych.</p>
 </section>
-<section id="podstawowe-pojęcia-w-ekosystemie-docker" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="podstawowe-pojęcia-w-ekosystemie-docker"><span class="header-section-number">3.2</span> Podstawowe pojęcia w ekosystemie Docker</h2>
+</section>
+<section id="podstawowe-pojęcia-w-ekosystemie-docker" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="podstawowe-pojęcia-w-ekosystemie-docker"><span class="header-section-number">3.3</span> Podstawowe pojęcia w ekosystemie Docker</h2>
 <p>Podstawowym elementem pracy z Dockerem jest obraz kontenera. Obraz można traktować jako szablon aplikacji, zawierający wszystkie niezbędne pliki, biblioteki oraz konfigurację. Na podstawie obrazu można uruchamiać wiele instancji kontenerów, które są jego działającymi egzemplarzami. Obrazy mogą być pobierane z publicznych rejestrów lub budowane samodzielnie przez użytkownika. Przykładowo można uruchomić aplikację w dwóch różnych wersjach.</p>
 <p>Kontener jest uruchomioną instancją obrazu. W praktyce oznacza to izolowany proces działający w systemie operacyjnym hosta. Kontener posiada własny system plików, interfejsy sieciowe oraz konfigurację środowiska, jednak współdzieli jądro systemu operacyjnego z hostem. Takie rozwiązanie zapewnia wysoką wydajność przy jednoczesnym zachowaniu izolacji aplikacji.</p>
 <p>Aby uruchomić kontener, wykorzystywana jest komenda <code>docker run</code>. Polecenie to powoduje utworzenie nowego kontenera na podstawie wskazanego obrazu oraz uruchomienie określonego procesu w jego wnętrzu. Jeżeli obraz nie jest dostępny lokalnie, Docker automatycznie pobiera go z rejestru. Dzięki temu wdrażanie aplikacji może być zrealizowane za pomocą pojedynczej komendy.</p>
@@ -270,44 +318,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> message shows that your installation appears to be working correctly.</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="tworzenie-własnego-obrazu-aplikacji" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="tworzenie-własnego-obrazu-aplikacji"><span class="header-section-number">3.3</span> Tworzenie własnego obrazu aplikacji</h2>
-<p>W wielu przypadkach konieczne jest przygotowanie własnego obrazu zawierającego aplikację użytkownika. W tym celu wykorzystywany jest plik konfiguracyjny o nazwie Dockerfile. Jest to prosty plik tekstowy zawierający instrukcje opisujące kolejne kroki budowania obrazu. Instrukcje te przypominają polecenia systemu Linux, co sprawia, że tworzenie Dockerfile jest stosunkowo proste nawet dla początkujących użytkowników.</p>
-<p>Proces budowania obrazu rozpoczyna się od określenia obrazu bazowego za pomocą instrukcji <code>FROM</code>. Obraz bazowy zawiera podstawowe środowisko systemowe lub runtime potrzebny do uruchomienia aplikacji, na przykład interpreter języka Python. Następnie określa się katalog roboczy wewnątrz kontenera oraz kopiuje pliki aplikacji z systemu hosta do systemu plików obrazu.</p>
-<p>Kolejnym etapem jest instalacja zależności aplikacji, na przykład bibliotek wymaganych przez środowisko programistyczne. Po wykonaniu tych operacji określany jest port, na którym aplikacja będzie dostępna, oraz polecenie startowe uruchamiane po uruchomieniu kontenera. Dzięki temu kontener automatycznie rozpocznie działanie aplikacji po jego uruchomieniu.</p>
-<p>Po przygotowaniu pliku Dockerfile obraz budowany jest za pomocą polecenia <code>docker build</code>. Komenda ta analizuje kolejne instrukcje w pliku i tworzy warstwowy obraz kontenera. Każda instrukcja Dockerfile tworzy nową warstwę obrazu, co pozwala na efektywne wykorzystanie mechanizmu cache podczas kolejnych procesów budowania.</p>
+<section id="pobieranie-obrazu-z-docker-hub" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="pobieranie-obrazu-z-docker-hub"><span class="header-section-number">3.4</span> Pobieranie obrazu z docker hub</h2>
+<p>Zanim zbudujemy własny obraz możemy skorzystać z wielu dostępnych w repozytorium dockera. Do pobierania służy komenda:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> pull busybox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Po pobraniu obraz zapisywany jest na komputerze i gotowy do użycia:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> images</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="zadanie-1" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="zadanie-1"><span class="header-section-number">3.4.1</span> Zadanie</h3>
+<p>Pobierz z repozytorium Docker Hub oficjalny obraz systemu Ubuntu.</p>
 </section>
-<section id="uruchamianie-aplikacji-w-kontenerze" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="uruchamianie-aplikacji-w-kontenerze"><span class="header-section-number">3.4</span> Uruchamianie aplikacji w kontenerze</h2>
-<p>Po zbudowaniu obrazu aplikacja może zostać uruchomiona w kontenerze. W tym celu wykorzystywana jest komenda <code>docker run</code>, która umożliwia również mapowanie portów pomiędzy kontenerem a systemem hosta. Mapowanie portów jest niezbędne w przypadku aplikacji sieciowych, ponieważ pozwala na dostęp do usług działających w kontenerze z poziomu przeglądarki internetowej lub innych aplikacji.</p>
-<p>Na przykład aplikacja działająca na porcie 5000 wewnątrz kontenera może zostać udostępniona na porcie 8888 systemu hosta. Dzięki temu użytkownik może uzyskać dostęp do aplikacji poprzez adres <code>http://localhost:8888</code>. Takie podejście umożliwia uruchamianie wielu kontenerów jednocześnie bez konfliktów portów.</p>
 </section>
-<section id="środowiska-wielokontenerowe" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="środowiska-wielokontenerowe"><span class="header-section-number">3.5</span> Środowiska wielokontenerowe</h2>
+<section id="uruchamianie-kontenerów-i-podstawowe-polecenia" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="uruchamianie-kontenerów-i-podstawowe-polecenia"><span class="header-section-number">3.5</span> Uruchamianie kontenerów i podstawowe polecenia</h2>
+<p>Jeśli kontener zostanie uruchomiony bez dodatkowych parametrów, wykona on swoje zadanie i natychmiast zakończy pracę. Aby wejść w interakcję z wnętrzem kontenera, można użyć flag <code>-it</code>, które dołączają interaktywny terminal użytkownika do procesu wewnątrz kontenera.</p>
+<p>Zarządzanie cyklem życia kontenerów obejmuje również ich monitorowanie i usuwanie. Polecenie <code>ps</code> pozwala sprawdzić aktualnie działające jednostki, a flaga <code>-a</code> rozszerza ten widok o kontenery, które już zakończyły pracę. Ważną praktyką jest regularne czyszczenie systemu z nieużywanych kontenerów za pomocą komendy <code>rm</code> lub narzędzi do automatycznego porządkowania, co zapobiega niepotrzebnemu zużyciu miejsca na dysku.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> busybox sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="zadanie-2" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="zadanie-2"><span class="header-section-number">3.5.1</span> Zadanie</h3>
+<p>Uruchom kontener Busybox z flagą <code>--rm</code>, wykonaj w nim komendę <code>ls</code> i sprawdź po wyjściu z niego, czy kontener nadal widnieje na liście <code>docker ps -a</code>.</p>
+</section>
+</section>
+<section id="wdrażanie-aplikacji-webowych-i-mapowanie-portów" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="wdrażanie-aplikacji-webowych-i-mapowanie-portów"><span class="header-section-number">3.6</span> Wdrażanie aplikacji webowych i mapowanie portów</h2>
+<p>Docker znacząco upraszcza uruchamianie serwerów WWW, pozwalając na ich szybkie odpalenie z gotowych obrazów dostępnych w rejestrach. Podczas pracy z usługami sieciowymi kluczowe jest zrozumienie trybu odłączonego (detached mode), który pozwala na działanie kontenera w tle, nawet po zamknięciu okna terminala. W takim trybie konieczne jest jednak odpowiednie opublikowanie portów, aby host mógł komunikować się z aplikacją zamkniętą w kontenerze.</p>
+<p>Użytkownik ma do wyboru automatyczne mapowanie portów na losowe numery lub ręczne przypisanie konkretnego portu maszyny fizycznej do portu, na którym nasłuchuje aplikacja wewnątrz kontenera. Dzięki temu można łatwo uruchomić wiele instancji tej samej aplikacji na jednym serwerze, kierując ruch na różne porty zewnętrzne.</p>
+<p>Pobierz obraz https://hub.docker.com/r/prakhar1989/static-site/ i uruchom go.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-p</span> 8888:80 prakhar1989/static-site</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="zadanie-3" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="zadanie-3"><span class="header-section-number">3.6.1</span> Zadanie</h3>
+<p>Uruchom kontener ze stroną statyczną prakhar1989/static-site w trybie odłączonym (-d) i nadaj mu nazwę własną moja-strona.</p>
+</section>
+</section>
+<section id="tworzenie-własnego-obrazu-aplikacji" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="tworzenie-własnego-obrazu-aplikacji"><span class="header-section-number">3.7</span> Tworzenie własnego obrazu aplikacji</h2>
+<p>Proces tworzenia niestandardowego obrazu opiera się na pliku tekstowym o nazwie <strong>Dockerfile</strong>, który zawiera zestaw instrukcji automatyzujących budowę środowiska. Każda linia w tym pliku odpowiada za utworzenie nowej warstwy obrazu, co pozwala na optymalizację i ponowne wykorzystanie gotowych elementów. Instrukcje w Dockerfile są bardzo zbliżone do standardowych komend systemowych Linux, dzięki czemu ich tworzenie jest intuicyjne dla osób znających terminal. Poprawnie sformułowany plik pozwala na spakowanie aplikacji wraz ze wszystkimi jej zależnościami w jedną, gotową do uruchomienia jednostkę.</p>
+<p>Struktura typowego pliku Dockerfile zaczyna się od instrukcji <code>FROM</code>, która definiuje obraz bazowy, stanowiący fundament dla naszych modyfikacji. Następnie, za pomocą komendy <code>WORKDIR</code>, określa się katalog roboczy wewnątrz kontenera, do którego kopiowane są pliki aplikacji przy użyciu instrukcji <code>COPY</code> lub <code>ADD</code>. Kluczowym elementem jest instalacja niezbędnych pakietów i bibliotek poprzez instrukcję <code>RUN</code> oraz wskazanie portów komunikacyjnych za pomocą <code>EXPOSE</code>. Na końcu pliku umieszcza się instrukcję <code>CMD</code>, która definiuje domyślne polecenie wykonywane automatycznie w momencie startu kontenera.</p>
+<p>Gotowy projekt zamienia się w obraz za pomocą polecenia <code>docker build</code>, w którym flaga <code>-t</code> (tag) pozwala nadać obrazowi czytelną nazwę i wersję. Kropka na końcu komendy wskazuje na kontekst budowy, czyli bieżący katalog, w którym Docker szuka pliku Dockerfile i plików aplikacji. Po pomyślnym zbudowaniu obrazu można go uruchomić jako kontener za pomocą komendy <code>docker run</code>, pamiętając o mapowaniu portów, aby aplikacja była dostępna z poziomu hosta.</p>
+<p>Zrozumienie różnicy między restartem kontenera a budową nowego obrazu jest kluczowe dla efektywnej pracy. <strong>Nowy obraz należy zbudować zawsze wtedy, gdy zmienia się „receptura” środowiska</strong>, czyli instrukcje w Dockerfile (np. dodanie nowej biblioteki systemowej) lub gdy zmieniamy kod aplikacji, który został na stałe wbudowany (skopiowany) do obrazu podczas procesu budowy. Natomiast <strong>restart kontenera wystarczy w sytuacjach, gdy potrzebujemy jedynie ponownego uruchomienia procesów wewnątrz już istniejącego środowiska</strong>, na przykład po awarii aplikacji.</p>
+<p>Prosty Dockerfile dla statycznej strony opartej na <a href="https://nginx.org/">Nginx</a>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ubuntu:latest</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install nginx <span class="at">-y</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"nginx"</span>, <span class="st">"-g"</span>, <span class="st">"daemon off;"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Budowanie i uruchomienie:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> moj-nginx:v1 .</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">-p</span> 8080:80 moj-nginx:v1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="zadanie-4" class="level3" data-number="3.7.1">
+<h3 data-number="3.7.1" class="anchored" data-anchor-id="zadanie-4"><span class="header-section-number">3.7.1</span> Zadanie:</h3>
+<p>Stwórz Dockerfile dla prostej aplikacji w wybranym języku (np. Python lub Node.js), zbuduj obraz o nazwie <code>moja-aplikacja:v1</code> i uruchom go. Następnie zmień tekst wyświetlany przez aplikację w pliku źródłowym i sprawdź, czy zwykły restart kontenera (<code>docker restart</code>) wystarczy, aby zmiany były widoczne, czy konieczne jest ponowne zbudowanie obrazu.</p>
+</section>
+</section>
+<section id="środowiska-wielokontenerowe" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="środowiska-wielokontenerowe"><span class="header-section-number">3.8</span> Środowiska wielokontenerowe</h2>
 <p>W praktycznych zastosowaniach aplikacje rzadko składają się z jednego kontenera. Typowa aplikacja internetowa może obejmować kilka komponentów, takich jak serwer aplikacji, baza danych, system cache czy wyszukiwarka. Zarządzanie taką architekturą przy użyciu pojedynczych poleceń <code>docker run</code> byłoby skomplikowane i podatne na błędy.</p>
 <p>Rozwiązaniem tego problemu jest narzędzie Docker Compose. Jest to narzędzie umożliwiające definiowanie i uruchamianie środowisk wielokontenerowych przy użyciu jednego pliku konfiguracyjnego. W pliku tym opisuje się wszystkie usługi wchodzące w skład aplikacji oraz relacje pomiędzy nimi.</p>
 <p>Docker Compose wywodzi się z projektu o nazwie Fig, który został stworzony w celu ułatwienia pracy z wieloma kontenerami w środowiskach programistycznych. Popularność tego narzędzia doprowadziła do jego przejęcia przez firmę Docker i przekształcenia w oficjalny projekt Docker Compose. Obecnie jest on standardowym narzędziem do zarządzania aplikacjami wielokontenerowymi w wielu środowiskach – od lokalnego developmentu po środowiska testowe i systemy CI/CD.</p>
 </section>
-<section id="plik-docker-compose.yml" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="plik-docker-compose.yml"><span class="header-section-number">3.6</span> Plik docker-compose.yml</h2>
+<section id="plik-docker-compose.yml" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="plik-docker-compose.yml"><span class="header-section-number">3.9</span> Plik docker-compose.yml</h2>
 <p>Konfiguracja środowiska wielokontenerowego zapisywana jest w pliku <code>docker-compose.yml</code>. Plik ten wykorzystuje składnię YAML i zawiera definicję wszystkich usług wchodzących w skład aplikacji. Każda usługa odpowiada jednemu kontenerowi oraz określa obraz, porty, wolumeny danych oraz inne parametry uruchomienia.</p>
 <p>Przykładowa konfiguracja może zawierać dwie usługi: serwer aplikacji oraz usługę wyszukiwania opartą na Elasticsearch. Dla każdej z nich określany jest obraz kontenera, a także dodatkowe parametry konfiguracyjne, takie jak zmienne środowiskowe czy mapowanie portów.</p>
 <p>Istotnym elementem konfiguracji są wolumeny danych. Pozwalają one na przechowywanie danych poza systemem plików kontenera, dzięki czemu dane mogą być zachowane nawet po usunięciu kontenera. Jest to szczególnie ważne w przypadku baz danych lub systemów przechowujących duże ilości informacji.</p>
 <p>Plik konfiguracyjny może również definiować zależności pomiędzy usługami. Parametr <code>depends_on</code> pozwala określić, że jeden kontener powinien zostać uruchomiony dopiero po starcie innego. Dzięki temu można zapewnić poprawną kolejność uruchamiania elementów systemu, na przykład najpierw bazy danych, a następnie aplikacji korzystającej z tej bazy.</p>
 </section>
-<section id="uruchamianie-środowiska-z-docker-compose" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="uruchamianie-środowiska-z-docker-compose"><span class="header-section-number">3.7</span> Uruchamianie środowiska z Docker Compose</h2>
+<section id="uruchamianie-środowiska-z-docker-compose" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="uruchamianie-środowiska-z-docker-compose"><span class="header-section-number">3.10</span> Uruchamianie środowiska z Docker Compose</h2>
 <p>Po przygotowaniu pliku konfiguracyjnego środowisko wielokontenerowe może zostać uruchomione za pomocą pojedynczej komendy <code>docker compose up</code>. Polecenie to automatycznie pobiera wymagane obrazy, tworzy kontenery oraz konfiguruje sieć pomiędzy nimi. W efekcie wszystkie komponenty aplikacji uruchamiane są jednocześnie i mogą komunikować się ze sobą w ramach wspólnej sieci.</p>
 <p>Docker Compose automatycznie tworzy również sieć wirtualną dla wszystkich usług zdefiniowanych w pliku konfiguracyjnym. Dzięki temu kontenery mogą odnajdywać się wzajemnie przy użyciu nazw usług jako nazw hostów. Mechanizm ten znacznie upraszcza konfigurację komunikacji pomiędzy komponentami aplikacji.</p>
 <p>Środowisko może zostać uruchomione w trybie interaktywnym lub w trybie odłączonym. W trybie odłączonym (<code>-d</code>) kontenery działają w tle, a użytkownik odzyskuje dostęp do terminala. Jest to szczególnie przydatne podczas pracy z aplikacjami webowymi lub w środowiskach serwerowych.</p>
 </section>
-<section id="zarządzanie-cyklem-życia-środowiska" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="zarządzanie-cyklem-życia-środowiska"><span class="header-section-number">3.8</span> Zarządzanie cyklem życia środowiska</h2>
+<section id="zarządzanie-cyklem-życia-środowiska" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="zarządzanie-cyklem-życia-środowiska"><span class="header-section-number">3.11</span> Zarządzanie cyklem życia środowiska</h2>
 <p>Docker Compose umożliwia również łatwe zarządzanie cyklem życia aplikacji. Polecenie <code>docker compose ps</code> pozwala wyświetlić listę uruchomionych usług oraz informacje o ich stanie i portach. W ten sposób można szybko zweryfikować, czy wszystkie komponenty aplikacji działają poprawnie.</p>
 <p>Zatrzymanie środowiska odbywa się za pomocą polecenia <code>docker compose down</code>. Komenda ta zatrzymuje i usuwa wszystkie kontenery utworzone przez Compose oraz usuwa utworzoną sieć. Opcjonalnie możliwe jest również usunięcie wolumenów danych, co powoduje całkowite usunięcie wszystkich danych aplikacji.</p>
 <p>Dzięki zastosowaniu Docker Compose zarządzanie złożonymi aplikacjami składającymi się z wielu usług staje się znacznie prostsze. Cała konfiguracja infrastruktury aplikacji zapisana jest w jednym pliku, co ułatwia jej wersjonowanie, automatyzację wdrożeń oraz integrację z narzędziami ciągłej integracji i dostarczania oprogramowania.</p>
+<section id="zadanie-5" class="level3" data-number="3.11.1">
+<h3 data-number="3.11.1" class="anchored" data-anchor-id="zadanie-5"><span class="header-section-number">3.11.1</span> Zadanie</h3>
+<p>Pobierz i uruchom przykładowy zestaw kontenerów ze strony https://github.com/docker/awesome-compose/tree/master/wordpress-mysql</p>
+</section>
+</section>
+<section id="zarządzanie-wolumenami-i-trwałość-danych" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="zarządzanie-wolumenami-i-trwałość-danych"><span class="header-section-number">3.12</span> Zarządzanie wolumenami i trwałość danych</h2>
+<p>Kontenery Dockera są z natury efemeryczne, co oznacza, że wszelkie dane utworzone lub zmodyfikowane wewnątrz nich zostają bezpowrotnie utracone w momencie usunięcia kontenera. Aby zapobiec utracie istotnych informacji, takich jak wpisy w bazach danych czy pliki przesłane przez użytkowników, stosuje się wolumeny. Są one mechanizmem pozwalającym na przechowywanie danych poza cyklem życia samego kontenera, na systemie plików maszyny hosta, co umożliwia ich zachowanie nawet po zatrzymaniu i skasowaniu instancji aplikacji.</p>
+<p>Zarządzanie wolumenami odbywa się za pomocą dedykowanych poleceń CLI, które pozwalają na ich tworzenie, wyświetlanie oraz usuwanie. Docker oferuje różne typy trwałości danych, z których najczęściej stosowane to wolumeny nazwane (zarządzane całkowicie przez Dockera) oraz montowania typu bind (umożliwiające bezpośrednie powiązanie katalogu z hosta z katalogiem w kontenerze). Stosowanie nazwanych wolumenów jest szczególnie polecane w scenariuszach produkcyjnych, gdyż Docker dba o ich strukturę i optymalizację, a użytkownik może łatwo odwoływać się do nich po prostej nazwie podczas uruchamiania kolejnych usług.</p>
+<p>Tworzenie nazwanego wolumenu i podpięcie go do bazy danych PostgreSQL:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> volume create dane-bazy </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--name</span> moja-baza <span class="at">-v</span> dane-bazy:/var/lib/postgresql/data postgres:12</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="zadanie-6" class="level3" data-number="3.12.1">
+<h3 data-number="3.12.1" class="anchored" data-anchor-id="zadanie-6"><span class="header-section-number">3.12.1</span> Zadanie</h3>
+<p>Utwórz nazwany wolumen o nazwie <code>moje-pliki</code>, a następnie uruchom kontener z obrazem <code>linux alpine</code> w trybie interaktywnym (<code>-it</code>), montując ten wolumen w katalogu <code>/dane</code>. Wewnątrz kontenera stwórz plik testowy poleceniem <code>touch /dane/test.txt</code>, wyjdź z kontenera, usuń go i sprawdź, czy po uruchomieniu nowego kontenera z tym samym wolumenem plik <code>test.txt</code> nadal istnieje w katalogu <code>/dane</code>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -346,18 +449,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -389,11 +481,48 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -403,8 +532,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -416,7 +554,129 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -460,6 +720,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -485,6 +746,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -546,17 +833,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01-linux.html" class="pagination-link">
+      <a href="./01-linux.html" class="pagination-link" aria-label="Wprowadzenie do linuxa">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Wprowadzenie do linuxa</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02a-azure-intro.html" class="pagination-link">
+      <a href="./02a-azure-intro.html" class="pagination-link" aria-label="Microsoft Azure - część 1">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Microsoft Azure - część 1</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

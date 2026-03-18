@@ -1,4 +1,4 @@
-## VirtualBox
+## Maszyny wirtualne
 
 Wirtualizacja to technologia, która pozwala na uruchomienie wielu systemów operacyjnych (tzw. Guest OS) na jednej fizycznej maszynie (Host OS) przy wykorzystaniu warstwy pośredniczącej zwanej Hypervisorem.
 
