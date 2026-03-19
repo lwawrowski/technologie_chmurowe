@@ -134,6 +134,14 @@ docker run -p 8888:80 prakhar1989/static-site
 
 Uruchom kontener ze stroną statyczną prakhar1989/static-site w trybie odłączonym (-d) i nadaj mu nazwę własną moja-strona.
 
+## Rozwiązywanie konfliktów portów i zatrzymywanie usług
+
+Podczas wdrażania aplikacji kontenerowych często dochodzi do sytuacji, w której wybrany port na maszynie hosta jest już zajęty przez inny proces lub kontener. Docker nie pozwoli na uruchomienie nowej usługi, jeśli nastąpi taka kolizja, co wymaga od administratora interwencji i zwolnienia zasobów. Najczęstszym rozwiązaniem jest zatrzymanie kontenera powodującego konflikt za pomocą polecenia stop, które wysyła sygnał SIGTERM, pozwalając procesom na bezpieczne zakończenie pracy przed całkowitym wyłączeniem. Jeśli kontener nie reaguje na prośbę o zatrzymanie, system po pewnym czasie wymusza zamknięcie sygnałem SIGKILL. Przykład zatrzymania kontenera o nazwie `stara-aplikacja`, który blokuje port 8080: 
+
+```bash
+docker stop stara-aplikacja
+```
+
 ## Tworzenie własnego obrazu aplikacji
 
 Proces tworzenia niestandardowego obrazu opiera się na pliku tekstowym o nazwie **Dockerfile**, który zawiera zestaw instrukcji automatyzujących budowę środowiska. Każda linia w tym pliku odpowiada za utworzenie nowej warstwy obrazu, co pozwala na optymalizację i ponowne wykorzystanie gotowych elementów. Instrukcje w Dockerfile są bardzo zbliżone do standardowych komend systemowych Linux, dzięki czemu ich tworzenie jest intuicyjne dla osób znających terminal. Poprawnie sformułowany plik pozwala na spakowanie aplikacji wraz ze wszystkimi jej zależnościami w jedną, gotową do uruchomienia jednostkę.
@@ -164,6 +172,26 @@ docker run -d -p 8888:80 moj-nginx:v1
 
 Stwórz Dockerfile dla prostej aplikacji w wybranym języku (np. Python lub Node.js), zbuduj obraz o nazwie `moja-aplikacja:v1` i uruchom go. Następnie zmień tekst wyświetlany przez aplikację w pliku źródłowym i sprawdź, czy zwykły restart kontenera (`docker restart`) wystarczy, aby zmiany były widoczne, czy konieczne jest ponowne zbudowanie obrazu.
 
+## Monitorowanie aplikacji i wyświetlanie logów
+
+Dostęp do logów generowanych przez aplikację wewnątrz kontenera jest podstawowym narzędziem diagnostycznym, pozwalającym sprawdzić, czy usługa wystartowała poprawnie lub dlaczego uległa awarii. Polecenie logs przechwytuje standardowe wyjście (stdout) i błędy (stderr) procesu głównego kontenera, wyświetlając historię zdarzeń od momentu jego utworzenia. Bardzo przydatną funkcją jest flaga `-f` (follow), która pozwala na śledzenie logów w czasie rzeczywistym, co jest nieocenione podczas debugowania interakcji sieciowych lub monitorowania startu bazy danych.
+
+Przykład ciągłego śledzenia logów działającej aplikacji:
+
+```bash
+docker logs -f moj-nginx:v1
+```
+
+## Automatyzacja restartów i flaga unless-stopped
+
+W środowiskach chmurowych kluczowe jest zapewnienie wysokiej dostępności usług, co Docker realizuje poprzez polityki restartu. Jedną z najczęściej stosowanych konfiguracji jest flaga `unless-stopped`, która instruuje silnik Dockera, aby automatycznie restartował kontener w przypadku jego awarii lub po restarcie całego serwera. Główną różnicą między tą flagą a polityką `always` jest to, że kontener nie zostanie uruchomiony ponownie po restarcie systemu, jeśli wcześniej został on celowo i ręcznie zatrzymany przez użytkownika. Jest to idealne rozwiązanie dla usług infrastrukturalnych, takich jak routery Nginx czy bazy danych, które powinny działać nieprzerwanie.
+
+Uruchomienie serwera WWW z gwarancją restartu po awarii, ale bez restartu po ręcznym zatrzymaniu:
+
+```bash
+docker run -d --restart unless-stopped nginx
+```
+
 ## Środowiska wielokontenerowe
 
 W praktycznych zastosowaniach aplikacje rzadko składają się z jednego kontenera. Typowa aplikacja internetowa może obejmować kilka komponentów, takich jak serwer aplikacji, baza danych, system cache czy wyszukiwarka. Zarządzanie taką architekturą przy użyciu pojedynczych poleceń `docker run` byłoby skomplikowane i podatne na błędy.
@@ -181,6 +209,30 @@ Przykładowa konfiguracja może zawierać dwie usługi: serwer aplikacji oraz us
 Istotnym elementem konfiguracji są wolumeny danych. Pozwalają one na przechowywanie danych poza systemem plików kontenera, dzięki czemu dane mogą być zachowane nawet po usunięciu kontenera. Jest to szczególnie ważne w przypadku baz danych lub systemów przechowujących duże ilości informacji.
 
 Plik konfiguracyjny może również definiować zależności pomiędzy usługami. Parametr `depends_on` pozwala określić, że jeden kontener powinien zostać uruchomiony dopiero po starcie innego. Dzięki temu można zapewnić poprawną kolejność uruchamiania elementów systemu, na przykład najpierw bazy danych, a następnie aplikacji korzystającej z tej bazy.
+
+Przykład pliku `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: moje_tajne_haslo
+    volumes:
+      - dane_bazy:/var/lib/postgresql/data
+
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  dane_bazy:
+```
 
 ## Uruchamianie środowiska z Docker Compose
 
